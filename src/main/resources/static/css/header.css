@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+/* 네비게이션 */
+body > div:nth-child(1) > header > ul > li > a{
+	color: #373538;
+	font-weight: 600;
+	font-size: 18px;
+}
+
+body > div:nth-child(1) > header > ul > li > a:hover{
+	color: #9213f2;
+}
+
+/* 로그인버튼 */
+body > div:nth-child(1) > header > ul > li:nth-child(5) > a {
+	border: 2px solid #9213f2;
+	border-radius: 5px;
+	color: #7952b3;
+}
+
+body > div:nth-child(1) > header > ul > li:nth-child(5) > a:hover{
+	background-color: #9213f2;
+	color: #fff;
+}
+

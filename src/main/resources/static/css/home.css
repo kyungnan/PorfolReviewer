@@ -1,0 +1,18 @@
+/* 화면공통 */
+.maxWidth960 {max-width: 960px;}
+
+/* banner */
+.banner {position: relative; width: 500px; height: 500px; margin:0 auto; padding:0; overflow: hidden;}
+.banner ul {position: absolute; margin: 0px; padding:0; list-style: none; }
+.banner ul li {float: left; width: 500px; height: 500px; margin:0; padding:0;}
+.banner ul li img {width: 500px; height: 500px;}
+
+/* category */
+#categoryNavi {height: 200px;line-height: 200px; }
+#categoryNavi > img {width: 200px; height: 200px;}
+
+/* best portfolio */
+#allViewBtn {background-color: #9213f2; color: #fff; border-radius: 5px;}
+
+/* reviewing list */
+#reviewingList {height: 500px;line-height: 500px; }
