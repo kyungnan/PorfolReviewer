@@ -1,18 +1,28 @@
 /* 화면공통 */
 .maxWidth960 {max-width: 960px;}
 
-/* banner */
+/* 배너 */
 .banner {position: relative; width: 500px; height: 500px; margin:0 auto; padding:0; overflow: hidden;}
 .banner ul {position: absolute; margin: 0px; padding:0; list-style: none; }
 .banner ul li {float: left; width: 500px; height: 500px; margin:0; padding:0;}
 .banner ul li img {width: 500px; height: 500px;}
 
-/* category */
-#categoryNavi {height: 200px;line-height: 200px; }
+/* 카테고리 */
+#categoryNavi {height: 200px;line-height: 200px;}
 #categoryNavi > img {width: 200px; height: 200px;}
 
-/* best portfolio */
+/* 베스트 포폴 */
 #allViewBtn {background-color: #9213f2; color: #fff; border-radius: 5px;}
 
-/* reviewing list */
-#reviewingList {height: 500px;line-height: 500px; }
+/* 서비스 소개 */
+#serviceInfo {height: 500px;}
+#serviceInfo > div > div {height: 350px; width: 500px;}
+#serviceInfo > div > div > a > img {height: 100%; border-radius: 20px; padding: 10px;}
+
+/* 포폴리스트 */
+#porfolList {height: 800px;}
+
+/* 서비스 이용 후기 */
+#seviceReview {height: 400px;}
+#seviceReview ul li .imgBox {width: 130px; height: 130px; border-radius: 70%; overflow: hidden;}
+#seviceReview ul li .imgBox img {width: 100%; height: 100%;}

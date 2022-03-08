@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="common/header">
+<head>
 	<meta charset="utf-8">
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -25,11 +25,12 @@
 					</ul>
 				</div>
 			</section>
-			<!-- 카테고리(백엔드/프론트엔트/디자인) -->
+			<!-- 카테고리(ALL/백엔드/프론트엔트/디자인) -->
 			<section>
 				<div id="categoryNavi" class="text-center bg-light mt-5 mb-5">
-					<img src="/images/developer.png">
+					<!-- <img src="/images/developer.png"> -->
 					<ul class="list-unstyled d-inline-block">
+						<li class="d-inline-block mx-5"><a class="text-decoration-none text-dark fs-5 fw-bolder" href="#"><img src="/images/all.png"><span>전체</span></a></li>
 						<li class="d-inline-block mx-5"><a class="text-decoration-none text-dark fs-5 fw-bolder" href="#"><img src="/images/front.png"><span>프론트엔드</span></a></li>
 						<li class="d-inline-block mx-5"><a class="text-decoration-none text-dark fs-5 fw-bolder" href="#"><img src="/images/back.png"><span>백엔드</span></a></li>
 						<li class="d-inline-block mx-5"><a class="text-decoration-none text-dark fs-5 fw-bolder" href="#"><img src="/images/design.png"><span>디자인</span></a></li>
@@ -66,28 +67,66 @@
 					</div>
 				</div>
 			</section>
-			<!-- 리뷰중인 포트폴리오 목록 -->
+			<!-- 서비스 소개 -->
 			<section>
-				<div id="reviewingList" class="text-center bg-light mt-5 mb-5">
-					<h3>포폴리뷰어란 어떤 서비스를 제공하나요?</h3>
-					<!-- 서비스 소개 -->
-					<div class="card" style="width: 18rem;">
-						<img src="/images/bestFrontImg.jpg" class="card-img-top" alt="...">
-						<div class="card-body">
-						    <p class="card-text">서비스 소개</p>
+				<div id="serviceInfo" class="text-center bg-light mt-5 mb-5">
+					<h3 class="pt-5">포폴리뷰어란 어떤 서비스를 제공하나요?</h3>
+					<div class="d-flex justify-content-center pt-4">
+						<!-- 서비스 소개 -->
+						<div>
+							<a href="/aboutUs"><img src="/images/aboutUs.jpg" class="card-img-top" alt="..."></a>
 						</div>
-					</div>
-					<!-- Q & A -->
-					<div class="card" style="width: 18rem;">
-						<img src="/images/bestFrontImg.jpg" class="card-img-top" alt="...">
-						<div class="card-body">
-						    <p class="card-text">자주 물어보는 질문</p>
+						<!-- Q & A -->
+						<div>
+							<a href="#"><img src="/images/faq.jpg" class="card-img-top" alt="..."></a>
 						</div>
 					</div>
 				</div>
 			</section>
+			<!-- 포폴리스트 -->
+			<section>
+				<div id="porfolList">
+					
+				</div>
+			</section>
 			<!-- 포폴리뷰어 서비스 이용 후기 -->
-			<section></section>
+			<section>
+				<div id="seviceReview" class="text-center bg-light mt-5 mb-5">
+					<h3 class="pt-5">포폴리뷰어 서비스 이용 후기</h3>
+					<ul class="list-unstyled pt-5">
+						<li class="d-inline-block">
+							<div class="imgBox mx-auto"><img class="rounded" alt="" src="/images/people1.png"></div>
+							<h6>김개발</h6>
+							<p>포폴리뷰어에서 제가 만든 포트폴리오를 올리고, 
+								<br>
+								여러사람들의 의견을 들어 더 나은 포트폴리오를
+								<br>
+								완성할 수 있었습니다!
+							</p>
+						</li>
+						<li class="d-inline-block">
+							<div class="imgBox mx-auto"><img alt="" src="/images/people2.png"></div>
+							<h6>이자바</h6>
+							<p>여러사람들의 포트폴리오를 보면서 제가 생각하지
+								<br>
+								못했던 포트폴리오 주제를 더 알 수 있었고,
+								<br>
+								서로 피드백을 주면서 많은 도움이 되었습니다.
+							</p>
+						</li>
+						<li class="d-inline-block">
+							<div class="imgBox mx-auto"><img alt="" src="/images/people3.png"></div>
+							<h6>박포토</h6>
+							<p>제가 실무에서 사용했던 것을 바탕으로 
+								<br>
+								포트폴리오를 만드는 사람들에게 도움을 줄 수 
+								<br>
+								있어서 정말 기쁩니다!
+							</p>
+						</li>
+					</ul>
+				</div>
+			</section>
 			<!-- 포폴리뷰어 시작하기 -->
 			<section></section>
 		</div>
