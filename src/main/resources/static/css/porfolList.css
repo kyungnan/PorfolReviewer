@@ -1,0 +1,4 @@
+@charset "UTF-8";
+/* 카테고리 */
+#categoryNavi {height: 200px;line-height: 200px;}
+#categoryNavi > img {width: 200px; height: 200px;}
