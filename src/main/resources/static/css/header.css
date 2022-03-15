@@ -1,4 +1,5 @@
 @charset "UTF-8";
+header{padding: 0 20px;}
 
 /* 네비게이션 */
 body > div:nth-child(1) > header > ul > li > a{
@@ -8,18 +9,18 @@ body > div:nth-child(1) > header > ul > li > a{
 }
 
 body > div:nth-child(1) > header > ul > li > a:hover{
-	color: #9213f2;
+	color: #7839ed;
 }
 
 /* 로그인버튼 */
 body > div:nth-child(1) > header > ul > li:nth-child(5) > a {
-	border: 2px solid #9213f2;
+	border: 2px solid #7839ed;
 	border-radius: 5px;
-	color: #7952b3;
+	color: #7839ed;
 }
 
 body > div:nth-child(1) > header > ul > li:nth-child(5) > a:hover{
-	background-color: #9213f2;
+	background-color: #7839ed;
 	color: #fff;
 }
 

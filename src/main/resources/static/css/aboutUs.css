@@ -1,11 +1,11 @@
 /* 소개말 */
 #service {padding-top: 150px;}
 #service div p {font-size: 2.2rem; color: #524f4f;}
-#service div p strong {color:#9213f2;}
+#service div p strong {color:#7839ed;}
 
 /* 목적 */
 #purpose {height: 700px;}
-#faqBtn {background-color: #9213f2; color: #fff; border-radius: 5px;}
+#faqBtn {background-color: #7839ed; color: #fff; border-radius: 5px;}
 
 /* 빠른 포폴올리기 */
 #fastUpload{height: 700px;}
