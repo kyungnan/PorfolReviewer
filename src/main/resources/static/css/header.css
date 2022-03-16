@@ -12,11 +12,12 @@ body > div:nth-child(1) > header > ul > li > a:hover{
 	color: #7839ed;
 }
 
-/* 로그인버튼 */
+/* 로그인, 회원가입 버튼 */
 body > div:nth-child(1) > header > ul > li:nth-child(5) > a {
 	border: 2px solid #7839ed;
 	border-radius: 5px;
 	color: #7839ed;
+	margin-right: 10px;
 }
 
 body > div:nth-child(1) > header > ul > li:nth-child(5) > a:hover{
@@ -24,3 +25,13 @@ body > div:nth-child(1) > header > ul > li:nth-child(5) > a:hover{
 	color: #fff;
 }
 
+body > div:nth-child(1) > header > ul > li:nth-child(6) > a {
+	border: 2px solid #7839ed;
+	border-radius: 5px;
+	color: #7839ed;
+}
+
+body > div:nth-child(1) > header > ul > li:nth-child(6) > a:hover{
+	background-color: #7839ed;
+	color: #fff;
+}
