@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.reviewer.portfolio.mapper.AccountMapper">
 	<!-- 전체 User 조회 -->
-    <select id="getAll" resultType="com.reviewer.portfolio.vo.UserVO">  // 결과 타입이 Member 객체이므로 Member 객체의 경로 입력
-        select * from member
+    <select id="getAll" resultType="com.reviewer.portfolio.vo.UserVO">
+        select * from user
     </select>
 
     <!-- id로 User 조회 -->
@@ -22,7 +22,7 @@
     </insert>
 	
 	<!-- User 삭제 -->
-    <update id="deleteUser">
+    <update id="deleteUser" parameterType="Long">
         delete from user where id=#{id}
     </update>
 </mapper>

@@ -4,7 +4,7 @@ $(document).ready(function() {
 		var username = $('#username');
 		var password = $('#password');
 		var passwordCheck = $('#passwordCheck');
-		var email = $('#email').val();
+		var email = $('#email');
 		
 		var regExp = /^[a-zA-Z0-9]{4,12}$/;		// username 과 password 유효성검사 정규식
         var email_regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;		// email 유효성검사 정규식
@@ -32,6 +32,7 @@ $(document).ready(function() {
             email.focus();
             return;
         }
+		$("form").submit();
 	});
 	
 	/* 이용약관 전체 체크 */

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="utf-8">
 	<!-- 부트스트랩 -->
@@ -19,9 +19,10 @@
      	<li class="nav-item"><a href="/porfolList" class="nav-link" aria-current="page">포트폴리오 리뷰하기</a></li>
      	<li class="nav-item"><a href="/porfolStart" class="nav-link">내 포트폴리오 리뷰받기</a></li>
      	<li class="nav-item"><a href="/aboutUs" class="nav-link">포폴리뷰어 소개</a></li>
-      	<li class="nav-item"><a href="#" class="nav-link">내정보</a></li>
-        <li class="nav-item"><a href="/login" class="nav-link">로그인</a></li>
-        <li class="nav-item"><a href="/join" class="nav-link">회원가입</a></li>
+      	<li class="nav-item"><a href="#" class="nav-link" sec:authorize="isAuthenticated()">내정보</a></li>
+      	<li class="nav-item"><a href="/account/logout" class="nav-link" sec:authorize="isAuthenticated()">로그아웃</a></li>
+	    <li class="nav-item"><a href="/account/login" class="nav-link" sec:authorize="isAnonymous()">로그인</a></li>
+	    <li class="nav-item"><a href="/account/join" class="nav-link" sec:authorize="isAnonymous()">회원가입</a></li>
     </ul>
 	</header>
 </body>
