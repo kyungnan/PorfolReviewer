@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.reviewer.portfolio.mapper.AttachFileMapper">
+
+    <!-- id로 File 조회 -->
+    <select id="getById" parameterType="Long" resultType="com.reviewer.portfolio.vo.AttachFileVO">
+        select * from attach_file where id = #{id}
+    </select>
+    
+    <!-- File 등록 -->
+    <insert id="insertFile" parameterType="com.reviewer.portfolio.vo.AttachFileVO" useGeneratedKeys="true" keyProperty="id">
+        insert into attach_file (origin_file_name, server_file_name, file_path)
+        values (#{originFileName}, #{serverFileName}, #{filePath})
+    </insert>
+</mapper>

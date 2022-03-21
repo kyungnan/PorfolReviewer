@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.reviewer.portfolio.mapper.ThumbnailMapper">
+
+    <!-- id로 File 조회 -->
+    <select id="getById" parameterType="Long" resultType="com.reviewer.portfolio.vo.ThumbnailVO">
+        select * from thumbnail where id = #{id}
+    </select>
+    
+    <!-- File 등록 -->
+    <insert id="insertThumbnail" parameterType="com.reviewer.portfolio.vo.ThumbnailVO" useGeneratedKeys="true" keyProperty="id">
+        insert into thumbnail (origin_thumbnail_name, server_thumbnail_name, thumbnail_path)
+        values (#{originThumbnailName}, #{serverThumbnailName}, #{thumbnailPath})
+    </insert>
+</mapper>
