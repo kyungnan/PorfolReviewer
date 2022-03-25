@@ -5,14 +5,12 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.reviewer.portfolio.mapper.AttachFileMapper;
 import com.reviewer.portfolio.mapper.ThumbnailMapper;
 import com.reviewer.portfolio.vo.AttachFileVO;
-import com.reviewer.portfolio.vo.PorfolUploadVO;
 import com.reviewer.portfolio.vo.ThumbnailVO;
 
 import lombok.RequiredArgsConstructor;
@@ -20,18 +18,26 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AttachFileService {
-	@Value("${file.upload.location}")
-	private String filePath;
 	@Autowired
 	private final AttachFileMapper attachFileMapper;
 	@Autowired
 	private final ThumbnailMapper thumbnailMapper;
 	
+	public String getFilePath(String servarFileName) {
+    	String projectPath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\upload\\files\\";
+		return projectPath + servarFileName;
+	}
+	
+	public String getThumbnailPath(String servarFileName) {
+    	String projectPath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\upload\\thumbnail\\";
+		return projectPath + servarFileName;
+	}
+	
 	public Long uploadAttachFile(MultipartFile multipartFile) {
 		String uuid = UUID.randomUUID().toString();
 		String originalfileName = multipartFile.getOriginalFilename();
 		String serverFileName =  uuid + "_" + originalfileName;
-		String storeFilePath = filePath + "/attachFile/" + serverFileName;
+		String storeFilePath = getFilePath(serverFileName);
 		
 		try {
 			multipartFile.transferTo(new File(storeFilePath));
@@ -53,7 +59,7 @@ public class AttachFileService {
 		String uuid = UUID.randomUUID().toString();
 		String originalfileName = multipartFile.getOriginalFilename();
 		String serverFileName =  uuid + "_" + originalfileName;
-		String storeFilePath = filePath + "/thumbnail/" + serverFileName;
+		String storeFilePath = getThumbnailPath(serverFileName);
 		
 		try {
 			multipartFile.transferTo(new File(storeFilePath));

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.reviewer.portfolio.mapper.HashtagMapper">
+	<!-- 전체 hashtag 조회 -->
+    <select id="getAll" resultType="com.reviewer.portfolio.vo.HashtagVO">  
+        select id, hashtag, board_id AS boardId
+        from hashtag
+    </select>
+
+    <!-- id로 hashtag 조회 -->
+    <select id="getById" parameterType="Long" resultType="com.reviewer.portfolio.vo.HashtagVO">
+        select id, hashtag, board_id AS boardId
+        from hashtag 
+        where id = #{id}
+    </select>
+    
+    <!-- hashtag 등록 -->
+    <insert id="insertHashtag" parameterType="com.reviewer.portfolio.vo.HashtagVO" useGeneratedKeys="true" keyProperty="id">
+        insert into hashtag (hashtag, board_id)
+        values (#{hashtag}, #{boardId})
+    </insert>
+</mapper>
