@@ -1,5 +1,8 @@
 package com.reviewer.portfolio.service;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -34,5 +37,16 @@ public class porfolBoardService {
 		
 		porfolBoardMapper.insertPorfol(porfolUploadVO);
 		return porfolUploadVO.getId();
+	}
+	
+	public List<PorfolUploadVO> getAll(com.reviewer.portfolio.vo.paging.Criteria criteria) {
+		List<PorfolUploadVO> boards = Collections.emptyList();
+		
+		int getAllCnt = porfolBoardMapper.getAllCnt(criteria);
+		
+		if (getAllCnt > 0) {
+			boards = porfolBoardMapper.getAll(criteria);
+		}
+		return boards;
 	}
 }

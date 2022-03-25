@@ -1,5 +1,9 @@
 package com.reviewer.portfolio.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -10,9 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.reviewer.portfolio.mapper.PorfolBoardMapper;
+import com.reviewer.portfolio.mapper.ThumbnailMapper;
 import com.reviewer.portfolio.service.HashtagService;
 import com.reviewer.portfolio.service.porfolBoardService;
 import com.reviewer.portfolio.vo.PorfolUploadVO;
+import com.reviewer.portfolio.vo.ThumbnailVO;
+import com.reviewer.portfolio.vo.paging.Criteria;
+import com.reviewer.portfolio.vo.paging.PageVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,21 +32,47 @@ public class ServiceController {
 	@Autowired
 	private final porfolBoardService porfolBoardService;
 	@Autowired
+	private final PorfolBoardMapper porfolBoardMapper;
+	@Autowired
+	private final ThumbnailMapper thumbnailMapper;
+	@Autowired
 	private final HashtagService hashtagService;
 
-	// 포폴리뷰터 소개
 	@GetMapping("/aboutUs")
 	public String aboutUs() {
 		return "aboutUs";
 	}
 	
-	// 포폴리뷰어 목록
+	// 포폴 목록
 	@GetMapping("/porfolList")
-	public String porfolList() {
-		return "porfolList";
+	public ModelAndView porfolList(@ModelAttribute("criteria") Criteria criteria, ModelAndView mav) {
+		List<PorfolUploadVO> porfolList = porfolBoardService.getAll(criteria);
+		Map<Long, String> thumbnailMap = new HashMap<>();
+
+		for (int i=0; i<porfolList.size(); i++) {
+			Long thumbnailId = porfolList.get(i).getThumbnailId();
+			ThumbnailVO thumbnailVO = thumbnailMapper.getById(thumbnailId);
+			thumbnailMap.put(thumbnailId, thumbnailVO.getServerThumbnailName());
+		}
+		
+		PageVO pageVO = getPageVO(criteria, porfolBoardMapper.getAllCnt(criteria));
+
+		mav.addObject("porfolList", porfolList);
+		mav.addObject("thumbnailMap", thumbnailMap);
+		mav.addObject("pageVO", pageVO);
+		mav.setViewName("porfolList");
+		return mav;
 	}
+	
+	// 페이징 메서드
+    private PageVO getPageVO(@ModelAttribute("criteria") Criteria criteria, int totalCnt) {
+    	PageVO pageVO = new PageVO();
+    	pageVO.setCriteria(criteria);
+    	pageVO.setTotalCnt(totalCnt);
+        return pageVO;
+    }
     
-	// 포폴리뷰어 업로드
+	// 포폴 업로드
 	@GetMapping("/porfolStart")
 	public String porfolStart() {
 		return "porfolStart";
