@@ -1,4 +1,26 @@
 @charset "UTF-8";
 /* 카테고리 */
-#categoryNavi {height: 200px;line-height: 200px;}
-#categoryNavi > img {width: 200px; height: 200px;}
+#categoryNavi { height: 200px; line-height: 200px; }
+#categoryNavi > img { width: 200px; height: 200px; }
+
+/* 검색폼 */
+#searchForm { width: 100%; }
+#searchType { display: inline-block; width: 20%; }
+#searchKeyword { display: inline-block; width: 55%; }
+#searchBtn { display: inline-block; width: 20%; margin-bottom: 4px; }
+
+/* 포폴 목록 */
+#porfolList { position: relative; width: 100%; max-width: 960px; text-align: center; margin: 0px auto; padding: 0px 30px; }
+#porfolList .card { display: flex; flex-wrap: wrap; width: 18rem;  margin: 10px 0;}
+#porfolList .card .thumbnailDiv{ width: 100%; height: 200px; }
+#porfolList .row { display: flex; flex-wrap: wrap; width: 100%; }
+
+.thumbnailDiv{ padding: 10px 0; }
+#thumbnail { width: 100%; height: 200px; object-fit: cover; }
+
+.card-body { text-align: left; }
+.card-body ul { display: inline-block; margin-left: -20px; }
+.card-body .card-text { width: 200px; height: 48px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box;
+  						-webkit-line-clamp: 2; -webkit-box-orient: vertical; color: gray; }
+
+#hashtags { font-size: 1.2rem; font-weight: 600; color: #7839ed; }

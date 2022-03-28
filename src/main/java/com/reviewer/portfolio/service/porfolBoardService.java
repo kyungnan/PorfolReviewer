@@ -1,6 +1,7 @@
 package com.reviewer.portfolio.service;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.reviewer.portfolio.mapper.AccountMapper;
 import com.reviewer.portfolio.mapper.PorfolBoardMapper;
 import com.reviewer.portfolio.vo.PorfolUploadVO;
+
 import com.reviewer.portfolio.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
@@ -39,13 +41,12 @@ public class porfolBoardService {
 		return porfolUploadVO.getId();
 	}
 	
-	public List<PorfolUploadVO> getAll(com.reviewer.portfolio.vo.paging.Criteria criteria) {
+	public List<PorfolUploadVO> getAll(HashMap<String, Object> map) {
 		List<PorfolUploadVO> boards = Collections.emptyList();
-		
-		int getAllCnt = porfolBoardMapper.getAllCnt(criteria);
+		Integer getAllCnt = porfolBoardMapper.getAllCnt(map);
 		
 		if (getAllCnt > 0) {
-			boards = porfolBoardMapper.getAll(criteria);
+			boards = porfolBoardMapper.getAll(map);
 		}
 		return boards;
 	}

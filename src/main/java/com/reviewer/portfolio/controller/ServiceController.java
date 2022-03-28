@@ -19,6 +19,7 @@ import com.reviewer.portfolio.mapper.ThumbnailMapper;
 import com.reviewer.portfolio.service.HashtagService;
 import com.reviewer.portfolio.service.porfolBoardService;
 import com.reviewer.portfolio.vo.PorfolUploadVO;
+import com.reviewer.portfolio.vo.SearchFormVO;
 import com.reviewer.portfolio.vo.ThumbnailVO;
 import com.reviewer.portfolio.vo.paging.Criteria;
 import com.reviewer.portfolio.vo.paging.PageVO;
@@ -45,21 +46,29 @@ public class ServiceController {
 	
 	// 포폴 목록
 	@GetMapping("/porfolList")
-	public ModelAndView porfolList(@ModelAttribute("criteria") Criteria criteria, ModelAndView mav) {
-		List<PorfolUploadVO> porfolList = porfolBoardService.getAll(criteria);
+	public ModelAndView porfolList(@ModelAttribute("criteria") Criteria criteria, ModelAndView mav, SearchFormVO searchFormVO) {
+		if (searchFormVO.getCategory() == null) {
+			searchFormVO.setCategory("all");
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("criteria", criteria);
+		map.put("searchFormVO", searchFormVO);
+		List<PorfolUploadVO> porfolList = porfolBoardService.getAll((HashMap<String, Object>) map);
+		
 		Map<Long, String> thumbnailMap = new HashMap<>();
-
 		for (int i=0; i<porfolList.size(); i++) {
 			Long thumbnailId = porfolList.get(i).getThumbnailId();
 			ThumbnailVO thumbnailVO = thumbnailMapper.getById(thumbnailId);
 			thumbnailMap.put(thumbnailId, thumbnailVO.getServerThumbnailName());
 		}
-		
-		PageVO pageVO = getPageVO(criteria, porfolBoardMapper.getAllCnt(criteria));
 
+		PageVO pageVO = getPageVO(criteria, porfolBoardMapper.getAllCnt((HashMap<String, Object>) map));
+		
 		mav.addObject("porfolList", porfolList);
 		mav.addObject("thumbnailMap", thumbnailMap);
 		mav.addObject("pageVO", pageVO);
+		mav.addObject("category", searchFormVO.getCategory());
 		mav.setViewName("porfolList");
 		return mav;
 	}
