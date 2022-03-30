@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- 부트스트랩 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<!-- 외부 css 추가 -->
+	<link th:href="@{/css/porfolDetail.css}" rel="stylesheet" />
+ 	<script th:src="@{/js/porfolDetail.js}" type="text/javascript"></script>
+	<title>Portfolio Reviewer - 포폴리뷰어</title>
+</head>
+<body>
+	<!-- 헤더 -->
+	<div th:insert="common/header"></div>
+	<!-- 메인 -->
+	<main>
+		<!-- 썸네일 / 포폴 기본정보 -->
+		<section>
+			<div class="container">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item" th:if="${#strings.equals(porfolUploadVO.category, 'frontend')}">
+						<img src="/images/front.png"><span>프론트엔드</span>
+					</li>
+					<li class="list-group-item" th:if="${#strings.equals(porfolUploadVO.category, 'backend')}">
+						<img src="/images/back.png"><span>백엔드</span>
+					</li>
+					<li class="list-group-item" th:if="${#strings.equals(porfolUploadVO.category, 'design')}">
+						<img src="/images/design.png"><span>디자인</span>
+					</li>
+				</ul>
+				<h1 th:text="${porfolUploadVO.title}">포폴 제목</h1>
+				<div class="d-inline-block" id="thumbnailDiv">
+					<img id="thumbnail" th:src="|/upload/thumbnail/${thumbnailVO.serverThumbnailName}|" class="card-img-top" alt="thumbnail..">
+				</div>
+				<div class="d-inline-block" id="fileInfoDiv">
+					<p>url : <a th:text="${porfolUploadVO.url}" target='_blank'></a></p>
+					<p>첨부파일 : <span th:text="${attachFileVO.originFileName}"></span></p>
+					<p>조회수 : <span th:text="${porfolUploadVO.viewCnt}"></span></p>
+					<p>좋아요 : <span th:text="${porfolUploadVO.likeCnt}"></span></p>
+				</div>
+				<p th:text="${porfolUploadVO.hashtags}" id="hashtags">사용언어 #xx 로 표시..</p>
+			</div>
+		</section>
+		
+		<!-- 포폴 설명 -->
+		<section>
+			<div class="container">
+				<p th:text="${porfolUploadVO.description}"></p>
+			</div>			
+		</section>	
+		
+		<!-- 개발자 정보 -->
+<!-- 		<section>
+			<div class="container">
+				<p>개발자</p>
+				<img alt="개발자 프로필 이미지" src="">
+				<p>경력</p>
+				<p>개발팀</p>
+				<p>개발팀 정보 및 소개..</p>
+			</div>
+		</section> -->
+		
+		<!-- 댓글 -->
+		<section class="container">
+			<div class="card mb-2">
+				<div class="card-header bg-light">
+					<i class="fa fa-comment fa"></i> 의견
+				</div>
+				<div class="card-body">
+					<ul class="list-group list-group-flush">
+					    <li class="list-group-item">
+						<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+						<button type="button" id="replyBtn" class="btn mt-3" onClick="javascript:addReply();">등록</button>
+					    </li>
+					</ul>
+				</div>
+			</div>
+		</section>
+	</main>
+	<!-- 푸터 -->
+	<div th:insert="common/footer"></div>
+</body>
+</html>

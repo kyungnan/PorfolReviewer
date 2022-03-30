@@ -56,7 +56,9 @@
 					<div class="card" th:each="porfolList:${porfolList}">
 						<div th:each="entry:${thumbnailMap}">
 							<div class="thumbnailDiv" th:if="${porfolList.thumbnailId == entry.key}">
-					  			<img id="thumbnail" th:src="|/upload/thumbnail/${entry.value}|" class="card-img-top" alt="thumbnail..">
+					  			<a th:href="@{/porfolDetail/{boardId}(boardId = ${porfolList.id})}">
+					  				<img id="thumbnail" th:src="|/upload/thumbnail/${entry.value}|" class="card-img-top" alt="thumbnail..">
+					  			</a>
 					  		</div>
 						</div>
 						<div class="card-body">

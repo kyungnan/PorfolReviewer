@@ -9,15 +9,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.reviewer.portfolio.mapper.AttachFileMapper;
 import com.reviewer.portfolio.mapper.PorfolBoardMapper;
 import com.reviewer.portfolio.mapper.ThumbnailMapper;
 import com.reviewer.portfolio.service.HashtagService;
 import com.reviewer.portfolio.service.porfolBoardService;
+import com.reviewer.portfolio.vo.AttachFileVO;
 import com.reviewer.portfolio.vo.PorfolUploadVO;
 import com.reviewer.portfolio.vo.SearchFormVO;
 import com.reviewer.portfolio.vo.ThumbnailVO;
@@ -38,6 +41,8 @@ public class ServiceController {
 	private final ThumbnailMapper thumbnailMapper;
 	@Autowired
 	private final HashtagService hashtagService;
+	@Autowired
+	private final AttachFileMapper attachFileMapper;
 
 	@GetMapping("/aboutUs")
 	public String aboutUs() {
@@ -99,6 +104,20 @@ public class ServiceController {
 		porfolBoardService.uploadPorfol(authentication, porfolUploadVO, portfolio, thumbnail);
 		hashtagService.insertHashtag(porfolUploadVO);
 		return "redirect:/porfolList";
+	}
+	
+	// 포폴 상세보기
+	@GetMapping("/porfolDetail/{boardId}")
+	public ModelAndView getPorfolDetail(@PathVariable Long boardId, ModelAndView mav) {
+		PorfolUploadVO porfolUploadVO = porfolBoardMapper.getById(boardId);
+		ThumbnailVO thumbnailVO = thumbnailMapper.getById(porfolUploadVO.getThumbnailId());
+		AttachFileVO attachFileVO = attachFileMapper.getById(porfolUploadVO.getFileId());
+
+		mav.addObject("porfolUploadVO", porfolUploadVO);
+		mav.addObject("thumbnailVO", thumbnailVO);
+		mav.addObject("attachFileVO", attachFileVO);
+		mav.setViewName("porfolDetail");
+		return mav;		
 	}
 	
 }
