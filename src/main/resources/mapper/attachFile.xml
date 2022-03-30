@@ -4,12 +4,33 @@
 
     <!-- id로 File 조회 -->
     <select id="getById" parameterType="Long" resultType="com.reviewer.portfolio.vo.AttachFileVO">
-        select * from attach_file where id = #{id}
+        SELECT 
+        	id, origin_file_name AS originFileName, server_file_name AS serverFileName 
+        FROM 
+        	attach_file 
+        WHERE 
+        	delete_yn = '0' AND id = #{id}
     </select>
     
     <!-- File 등록 -->
     <insert id="insertFile" parameterType="com.reviewer.portfolio.vo.AttachFileVO" useGeneratedKeys="true" keyProperty="id">
-        insert into attach_file (origin_file_name, server_file_name, file_path)
-        values (#{originFileName}, #{serverFileName}, #{filePath})
+        INSERT INTO 
+        	attach_file (origin_file_name, server_file_name, file_path)
+        VALUES 
+        	(#{originFileName}, #{serverFileName}, #{filePath})
+       	ON DUPLICATE KEY UPDATE
+        	origin_file_name = #{originFileName},
+        	server_file_name = #{serverFileName},
+        	file_path 		 = #{filePath}
     </insert>
+    
+    <!-- File 삭제 -->
+    <update id="deleteFile" parameterType="Long">
+    	UPDATE 
+    		attach_file
+    	SET 
+    		delete_yn = '1'
+    	WHERE 
+    		id = #{id}
+    </update>
 </mapper>

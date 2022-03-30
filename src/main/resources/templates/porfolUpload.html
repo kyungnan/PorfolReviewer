@@ -17,15 +17,17 @@
 	<main>
 		<section>
 			<div class="text-center bg-light mt-5 mb-5">
-				<form action="/porfolUpload" method="post" enctype="multipart/form-data" class="w-75 mx-auto" name="uploadForm">
+				<form th:action="@{/porfolUpload(id = ${porfolUploadVO.id})}" method="post" enctype="multipart/form-data" class="w-75 mx-auto" name="uploadForm">
 					<!-- 카테고리 -->
 					<input type="hidden" th:value="${category}" name="category">
 					<!-- 제목 -->
 					<h5 class="pt-4">제목을 입력해주세요.</h5>
-					<input class="form-control form-control-lg mb-4" type="text" id="title" name="title" placeholder="title" aria-label=".form-control-lg example">
+					<input class="form-control form-control-lg mb-4" type="text" id="title" name="title" placeholder="title" 
+						aria-label=".form-control-lg example" th:value="${porfolUploadVO.title}">
 					<!-- URL -->
 					<h5>URL을 입력해주세요.</h5>
-					<input class="form-control form-control-lg mb-4" type="text" id="url" name="url" placeholder="url" aria-label=".form-control-lg example">
+					<input class="form-control form-control-lg mb-4" type="text" id="url" name="url" placeholder="url" 
+						aria-label=".form-control-lg example" th:value="${porfolUploadVO.url}">
 					<!-- 첨부파일 -->
 					<h5>포트폴리오를 첨부해주세요.</h5>
 					<input class="form-control form-control-lg mb-4" type="file" id="portfolio" name="portfolio" placeholder="portfolio upload" aria-label=".form-control-lg example">
@@ -36,11 +38,12 @@
 					<h5>포트폴리오를 설명해주세요.</h5>
 					<div class="input-group" style="height: 500px;">
 					  <span class="input-group-text">설명</span>
-					  <textarea class="form-control" aria-label="With textarea" id="description" name="description"></textarea>
+					  <textarea class="form-control" aria-label="With textarea" id="description" name="description" th:text="${porfolUploadVO.description}"></textarea>
 					</div>
 					<!-- 언어 선택(해시태그 구현) -->
-					<h5 class="pt-4">사용 언어를 해시태그로 입력해주세요.</h5>
-					<input class="form-control form-control-lg mb-4" type="text" id="hashtags" name="hashtags" placeholder="#Java #Node.js ..." aria-label=".form-control-lg example">
+					<h5 class="pt-4">사용 언어를 해시태그로 입력해주세요. (해시태그 사이 띄워쓰기 필수!)</h5>
+					<input class="form-control form-control-lg mb-4" type="text" id="hashtags" name="hashtags" placeholder="#Java #Node.js ..." 
+						aria-label=".form-control-lg example" th:value="${porfolUploadVO.hashtags}">
 					<!-- 전송버튼 -->
 					<button type="button" class="btn btn-primary btn-lg mb-4" id="uploadBtn">업로드</button>
 				</form>

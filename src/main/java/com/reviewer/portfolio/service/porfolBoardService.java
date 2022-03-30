@@ -28,7 +28,7 @@ public class porfolBoardService {
 	@Autowired
 	private final PorfolBoardMapper porfolBoardMapper;
 	
-	public Long uploadPorfol(Authentication authentication, PorfolUploadVO porfolUploadVO, MultipartFile portfolio, MultipartFile thumbnail) {
+	public void uploadPorfol(Authentication authentication, PorfolUploadVO porfolUploadVO, MultipartFile portfolio, MultipartFile thumbnail) {
 		Long fileId = attachFileService.uploadAttachFile(portfolio);
 		Long thumbnailId = attachFileService.uploadThumbnail(thumbnail);
 		UserVO user = accountMapper.getByUsername(authentication.getName());
@@ -38,7 +38,6 @@ public class porfolBoardService {
 		porfolUploadVO.setUserId(user.getId());
 		
 		porfolBoardMapper.insertPorfol(porfolUploadVO);
-		return porfolUploadVO.getId();
 	}
 	
 	public List<PorfolUploadVO> getAll(HashMap<String, Object> map) {

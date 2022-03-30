@@ -4,13 +4,28 @@
 
     <!-- id로 Thumbnail 조회 -->
     <select id="getById" parameterType="Long" resultType="com.reviewer.portfolio.vo.ThumbnailVO">
-        select id, origin_thumbnail_name AS originThumbnailName, server_thumbnail_name AS serverThumbnailName, thumbnail_path AS thumbnailPath
-        from thumbnail where id = #{id}
+        SELECT id, origin_thumbnail_name AS originThumbnailName, server_thumbnail_name AS serverThumbnailName, thumbnail_path AS thumbnailPath
+        FROM thumbnail 
+        WHERE id = #{id}
     </select>
     
     <!-- Thumbnail 등록 -->
     <insert id="insertThumbnail" parameterType="com.reviewer.portfolio.vo.ThumbnailVO" useGeneratedKeys="true" keyProperty="id">
-        insert into thumbnail (origin_thumbnail_name, server_thumbnail_name, thumbnail_path)
-        values (#{originThumbnailName}, #{serverThumbnailName}, #{thumbnailPath})
+        INSERT INTO thumbnail (origin_thumbnail_name, server_thumbnail_name, thumbnail_path)
+        VALUES (#{originThumbnailName}, #{serverThumbnailName}, #{thumbnailPath})
+        ON DUPLICATE KEY UPDATE
+        	origin_thumbnail_name = #{originThumbnailName},
+        	server_thumbnail_name = #{serverThumbnailName},
+        	thumbnail_path		  = #{thumbnailPath}
     </insert>
+    
+    <!-- Thumbnail 삭제 -->
+    <update id="deleteThumbnail" parameterType="Long">
+    	UPDATE 
+    		Thumbnail
+    	SET 
+    		delete_yn = '1'
+    	WHERE 
+    		id = #{id}
+    </update>
 </mapper>

@@ -15,15 +15,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.reviewer.portfolio.mapper.AccountMapper;
 import com.reviewer.portfolio.mapper.AttachFileMapper;
 import com.reviewer.portfolio.mapper.PorfolBoardMapper;
 import com.reviewer.portfolio.mapper.ThumbnailMapper;
-import com.reviewer.portfolio.service.HashtagService;
 import com.reviewer.portfolio.service.porfolBoardService;
 import com.reviewer.portfolio.vo.AttachFileVO;
 import com.reviewer.portfolio.vo.PorfolUploadVO;
 import com.reviewer.portfolio.vo.SearchFormVO;
 import com.reviewer.portfolio.vo.ThumbnailVO;
+import com.reviewer.portfolio.vo.UserVO;
 import com.reviewer.portfolio.vo.paging.Criteria;
 import com.reviewer.portfolio.vo.paging.PageVO;
 
@@ -40,9 +41,9 @@ public class ServiceController {
 	@Autowired
 	private final ThumbnailMapper thumbnailMapper;
 	@Autowired
-	private final HashtagService hashtagService;
-	@Autowired
 	private final AttachFileMapper attachFileMapper;
+	@Autowired
+	private final AccountMapper accountMapper;
 
 	@GetMapping("/aboutUs")
 	public String aboutUs() {
@@ -86,14 +87,21 @@ public class ServiceController {
         return pageVO;
     }
     
-	// 포폴 업로드
+	// 포폴 업로드(수정 폼 공유)
 	@GetMapping("/porfolStart")
 	public String porfolStart() {
 		return "porfolStart";
 	}
 	
 	@GetMapping("/porfolUpload")
-	public ModelAndView porfolUploadForm(@RequestParam String category, ModelAndView mav) {
+	public ModelAndView porfolUploadForm(@RequestParam(required = false) Long id, @RequestParam(required = false) String category, ModelAndView mav) {
+		if (id == null) {
+			mav.addObject("porfolUploadVO", new PorfolUploadVO());
+		} else {
+			PorfolUploadVO porfolUploadVO = porfolBoardMapper.getById(id);
+			mav.addObject("porfolUploadVO", porfolUploadVO);
+		}
+
 		mav.addObject("category", category);
 		mav.setViewName("porfolUpload");
 		return mav;
@@ -102,22 +110,36 @@ public class ServiceController {
 	@PostMapping("/porfolUpload")
 	public String porfolUpload(Authentication authentication, @ModelAttribute PorfolUploadVO porfolUploadVO, @RequestParam("portfolio") MultipartFile portfolio, @RequestParam("thumbnail") MultipartFile thumbnail) {
 		porfolBoardService.uploadPorfol(authentication, porfolUploadVO, portfolio, thumbnail);
-		hashtagService.insertHashtag(porfolUploadVO);
 		return "redirect:/porfolList";
 	}
 	
 	// 포폴 상세보기
-	@GetMapping("/porfolDetail/{boardId}")
-	public ModelAndView getPorfolDetail(@PathVariable Long boardId, ModelAndView mav) {
-		PorfolUploadVO porfolUploadVO = porfolBoardMapper.getById(boardId);
+	@GetMapping("/porfolDetail/{id}")
+	public ModelAndView getPorfolDetail(Authentication authentication , @PathVariable Long id, ModelAndView mav) {
+		PorfolUploadVO porfolUploadVO = porfolBoardMapper.getById(id);
 		ThumbnailVO thumbnailVO = thumbnailMapper.getById(porfolUploadVO.getThumbnailId());
-		AttachFileVO attachFileVO = attachFileMapper.getById(porfolUploadVO.getFileId());
-
+		AttachFileVO attachFileVO = attachFileMapper.getById(porfolUploadVO.getFileId());	
+		UserVO userVO = accountMapper.getByUsername(authentication.getName());
+		
 		mav.addObject("porfolUploadVO", porfolUploadVO);
 		mav.addObject("thumbnailVO", thumbnailVO);
 		mav.addObject("attachFileVO", attachFileVO);
+		mav.addObject("userVO", userVO);
 		mav.setViewName("porfolDetail");
 		return mav;		
+	}
+	
+	// 포폴 삭제
+	@GetMapping("/porfolDelete")
+	public String setPorfolDelete(@RequestParam Long id, ModelAndView mav) {
+		System.out.println(id);
+		PorfolUploadVO porfolUploadVO = porfolBoardMapper.getById(id);
+
+		porfolBoardMapper.deletePorfol(id);
+		attachFileMapper.deleteFile(porfolUploadVO.getFileId());
+		thumbnailMapper.deleteThumbnail(porfolUploadVO.getThumbnailId());
+		
+		return "redirect:/porfolList";
 	}
 	
 }

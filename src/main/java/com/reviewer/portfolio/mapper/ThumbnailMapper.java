@@ -11,4 +11,5 @@ import com.reviewer.portfolio.vo.ThumbnailVO;
 public interface ThumbnailMapper {
 	ThumbnailVO getById(@Param("id") Long id);
 	Long insertThumbnail(ThumbnailVO thumbnailVO);
+	int deleteThumbnail(@Param("id") Long id);
 }

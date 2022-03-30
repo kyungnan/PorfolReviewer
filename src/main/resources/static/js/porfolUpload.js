@@ -5,6 +5,7 @@ $(document).ready(function() {
 		var portfolio = $('#portfolio');
 		var description = $('#description');
 		var hashtags = $('#hashtags');
+		var thumbnail = $('#thumbnail');
 		
 		if (title.val() == ''){
 			alert('제목을 입력해주세요.');
@@ -22,8 +23,13 @@ $(document).ready(function() {
 			return;
 		}
 		if (hashtags.val() == ''){
-			alert('사용 언어를 입력해부세요.');
+			alert('사용 언어를 입력해주세요.');
 			hashtags.focus();
+			return;
+		}
+		if (thumbnail.val() == ''){
+			alert('썸네일을 첨부해주세요.');
+			thumbnail.focus();
 			return;
 		}
 		return document.uploadForm.submit();
