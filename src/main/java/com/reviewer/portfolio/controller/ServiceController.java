@@ -18,10 +18,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.reviewer.portfolio.mapper.AccountMapper;
 import com.reviewer.portfolio.mapper.AttachFileMapper;
 import com.reviewer.portfolio.mapper.PorfolBoardMapper;
+import com.reviewer.portfolio.mapper.ReplyMapper;
 import com.reviewer.portfolio.mapper.ThumbnailMapper;
 import com.reviewer.portfolio.service.porfolBoardService;
 import com.reviewer.portfolio.vo.AttachFileVO;
 import com.reviewer.portfolio.vo.PorfolUploadVO;
+import com.reviewer.portfolio.vo.ReplyVO;
 import com.reviewer.portfolio.vo.SearchFormVO;
 import com.reviewer.portfolio.vo.ThumbnailVO;
 import com.reviewer.portfolio.vo.UserVO;
@@ -44,6 +46,8 @@ public class ServiceController {
 	private final AttachFileMapper attachFileMapper;
 	@Autowired
 	private final AccountMapper accountMapper;
+	@Autowired
+	private final ReplyMapper replyMapper;
 
 	@GetMapping("/aboutUs")
 	public String aboutUs() {
@@ -120,11 +124,18 @@ public class ServiceController {
 		ThumbnailVO thumbnailVO = thumbnailMapper.getById(porfolUploadVO.getThumbnailId());
 		AttachFileVO attachFileVO = attachFileMapper.getById(porfolUploadVO.getFileId());	
 		UserVO userVO = accountMapper.getByUsername(authentication.getName());
+		List<ReplyVO> replyList = replyMapper.getAll(id);
+		
+		// updateFlag 초기화
+		for (int i=0; i<replyList.size(); i++) {
+			replyList.get(i).setUpdateFlag(false);
+		}
 		
 		mav.addObject("porfolUploadVO", porfolUploadVO);
 		mav.addObject("thumbnailVO", thumbnailVO);
 		mav.addObject("attachFileVO", attachFileVO);
 		mav.addObject("userVO", userVO);
+		mav.addObject("replyList", replyList);
 		mav.setViewName("porfolDetail");
 		return mav;		
 	}

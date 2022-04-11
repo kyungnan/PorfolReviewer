@@ -62,24 +62,111 @@
 			</div>			
 		</section>	
 		
-		<!-- 댓글 -->
-		<section class="container">
-			<div class="card mb-2">
-				<div class="card-header bg-light">
-					<i class="fa fa-comment fa"></i> 의견
-				</div>
-				<div class="card-body">
-					<ul class="list-group list-group-flush">
-					    <li class="list-group-item">
-						<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-						<button type="button" id="replyBtn" class="btn btn-outline-dark mt-3" onClick="javascript:addReply();">등록</button>
-					    </li>
-					</ul>
+		<!-- 댓글 작성 -->
+		<section>
+			<div class="container">
+				<input type="hidden" id="boardId" th:value="${porfolUploadVO.id}">
+				<div class="card mb-2">
+					<div class="card-header bg-light">
+						<i class="fa fa-comment fa"></i> 의견
+					</div>
+					<div class="card-body">
+						<ul class="list-group list-group-flush">
+						    <li class="list-group-item">
+							<textarea id="replyText" class="form-control" rows="3"></textarea>
+							<button type="button" id="replyAddBtn" class="btn btn-outline-dark mt-3">등록</button>
+						    </li>
+						</ul>
+					</div>
 				</div>
 			</div>
+		</section>
+		
+		<!-- 댓글 목록 -->
+		<section>
+			<div class="container">
+	            <div class="card mb-2">
+	            	<div class="card-header bg-light">
+						<i class="fa fa-comment fa"></i> 댓글 
+					</div>
+					<div id="replyDiv">
+						<div th:id="${replyList.id}" class="card-body replyList" th:each="replyList : ${replyList}">
+							<input class="replyId" type="hidden" th:value="${replyList.id}">
+							<div class="d-inline-block profileImgDiv">
+								<img class="profileImg" alt="" src="/images/people3.png">
+							</div>
+							<div class="d-inline-block replyContentDiv">
+								<ul class="list-group list-group-flush">
+								    <li class="list-group-item">
+								    	<h6 class="username" th:text="${replyList.username}"></h6>
+										<p class="replyTextOrigin" th:text="${replyList.replyText}"></p>
+										<p th:text="${replyList.createDt}"></p>
+										<div th:if="${userVO?.username.equals(replyList.username)}">
+											<button class="btn btn-outline-dark" type="button" th:onclick="'javascript:replyUpdateForm(' + ${replyList.id} + ');'">수정</button>
+											<button class="btn btn-outline-dark" type="button" th:onclick="'javascript:replyDelete(' + ${replyList.id} + ');'">삭제</button>
+										</div>
+								    </li>
+								</ul>
+							</div>
+						</div>
+					</div>
+	            </div>
+	        </div>
 		</section>
 	</main>
 	<!-- 푸터 -->
 	<div th:insert="common/footer"></div>
+	
+	<script type="text/javascript">
+		/* 부모댓글 수정 폼 (get)*/
+		function replyUpdateForm (replyId){
+			var username = $('#' + replyId + ' .username').text();
+			var replyTextOrigin = $('#' + replyId + ' .replyTextOrigin').text();
+			var updateForm =  '<div th:id="' + replyId + '" class="card-body replyList"><div class="d-inline-block profileImgDiv"><img class="profileImg" alt="" src="/images/people1.png"></div>' +
+			'<div class="d-inline-block replyContentDiv"><ul class="list-group list-group-flush"><li class="list-group-item"><h6 id="username">'+username+'</h6>' +
+			'<textarea id="replyTextUpdate" class="form-control" rows="3">'+ replyTextOrigin +'</textarea>' +
+			'<p>' + new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '') +'</p>' +
+			'<div><button id="replyUpdateBtn" class="btn btn-outline-dark" type="button">수정완료</button></div></li></ul></div></div>';
+
+			$('#' + replyId).replaceWith(updateForm);
+			
+			/* 부모댓글 수정 처리 (post)*/
+			$('#replyUpdateBtn').on('click', function(){
+				var replyTextUpdate = $('#replyTextUpdate').val();
+				
+				$.ajax({
+					url		 : "/reply/" + replyId,
+					type	 : "post",
+					data	 : {
+						replyTextUpdate : replyTextUpdate
+					},
+					success  : function(resp){
+						location.reload();
+					},
+					error 	 : function(XMLHttpRequest, textStatus, errorThrown){
+						alert('댓글 수정이 실패했습니다. 다시 시도 해주세요.');
+					}
+				});
+			})
+		}
+		
+		/* 부모댓글 삭제 처리 */
+		function replyDelete (replyId){
+			if (confirm('댓글을 삭제하시겠습니까?')){
+				$.ajax({
+					url		 : "/reply/" + replyId,
+					type	 : "delete",
+					success  : function(resp){
+						location.reload();
+					},
+					error 	 : function(XMLHttpRequest, textStatus, errorThrown){
+						alert('댓글 삭제가 실패했습니다. 다시 시도 해주세요.');
+					}
+				});
+			} else {
+				return;
+			}
+		}
+	</script>
 </body>
 </html>

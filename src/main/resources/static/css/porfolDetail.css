@@ -3,3 +3,8 @@
 #thumbnail{ height: 500px; object-fit: cover; border: 1px solid #e6e6e6; border-radius: 5px; }
 #fileInfoDiv {width: 38%; padding-left: 30px; font-size: 1.2rem; }
 #hashtags {font-weight: 600; color: #7950f2;}
+
+/* 댓글 */
+.profileImgDiv {width: 8%; }
+.replyContentDiv {width: 90%; }
+.replyList img { position: relative; top: 30px; left: 10px; border-radius: 50%; width: 80px; height: 80px; }
