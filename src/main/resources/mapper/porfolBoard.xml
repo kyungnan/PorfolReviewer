@@ -107,4 +107,14 @@
         WHERE 
         	id=#{id}
     </update>
+    
+    <!-- Porfol 조회수 -->
+    <update id="updateViewCnt" parameterType="Long">
+    	UPDATE
+    		board
+    	SET
+    		view_cnt = view_cnt + 1
+    	WHERE
+    		id = #{id}
+    </update>
 </mapper>

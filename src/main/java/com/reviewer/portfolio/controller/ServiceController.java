@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -119,12 +123,14 @@ public class ServiceController {
 	
 	// 포폴 상세보기
 	@GetMapping("/porfolDetail/{id}")
-	public ModelAndView getPorfolDetail(Authentication authentication , @PathVariable Long id, ModelAndView mav) {
+	public ModelAndView getPorfolDetail(Authentication authentication , @PathVariable Long id, ModelAndView mav, HttpServletRequest request, HttpServletResponse response) {		
 		PorfolUploadVO porfolUploadVO = porfolBoardMapper.getById(id);
 		ThumbnailVO thumbnailVO = thumbnailMapper.getById(porfolUploadVO.getThumbnailId());
 		AttachFileVO attachFileVO = attachFileMapper.getById(porfolUploadVO.getFileId());	
 		UserVO userVO = accountMapper.getByUsername(authentication.getName());
 		List<ReplyVO> replyList = replyMapper.getAll(id);
+		
+		avoidDuplicatedViewCnt(id, request, response);
 		
 		mav.addObject("porfolUploadVO", porfolUploadVO);
 		mav.addObject("thumbnailVO", thumbnailVO);
@@ -134,7 +140,33 @@ public class ServiceController {
 		mav.setViewName("porfolDetail");
 		return mav;		
 	}
-	
+
+	// 조회수 중복 방지 메서드(cookie)
+	private void avoidDuplicatedViewCnt(Long id, HttpServletRequest request, HttpServletResponse response) {
+		Cookie[] cookies = request.getCookies();
+	    int visitor = 0;
+	    
+	    for (Cookie cookie : cookies) {
+	    	if (cookie.getName().equals("visit")) {
+	    		visitor = 1;
+	    		
+	    		if (cookie.getValue().contains(String.valueOf(id))) {
+	    			System.out.println("visitif 통과");
+	    		} else {
+	    			cookie.setValue(cookie.getValue() + "_" + String.valueOf(id));
+	    			response.addCookie(cookie);
+	    			porfolBoardMapper.updateViewCnt(id);
+	    		}
+	    	}
+	    }
+	    
+	    if (visitor == 0) {
+	    	Cookie cookie = new Cookie("visit", String.valueOf(id));
+	    	response.addCookie(cookie);
+	    	porfolBoardMapper.updateViewCnt(id);
+	    }
+	}
+
 	// 포폴 삭제
 	@GetMapping("/porfolDelete")
 	public String setPorfolDelete(@RequestParam Long id, ModelAndView mav) {

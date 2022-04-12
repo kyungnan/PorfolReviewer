@@ -17,4 +17,5 @@ public interface PorfolBoardMapper {
 	PorfolUploadVO getById(@Param("id") Long id);
 	Long insertPorfol(PorfolUploadVO userVO);
 	int deletePorfol(@Param("id") Long id);
+	int updateViewCnt(@Param("id") Long id);
 }
