@@ -31,7 +31,7 @@
     		create_dt	= NOW()
     </insert>
     
-    <!-- 부모 댓글 수정 -->
+    <!-- 부모 / 자식 댓글 수정 -->
     <update id="updateReply" parameterType="com.reviewer.portfolio.vo.ReplyVO">
     	UPDATE reply 
     	SET reply_text = #{replyText},
@@ -39,10 +39,25 @@
     	WHERE id = #{id}
     </update>
     
-    <!-- 댓글 삭제 -->
+    <!-- 부모 / 자식 댓글 삭제 -->
     <delete id="deleteReply" parameterType="Long">
     	DELETE
     	FROM reply
     	WHERE id = #{id}
     </delete>
+    
+    <!-- 자식 댓글 등록 -->
+	<insert id="insertReReply" parameterType="com.reviewer.portfolio.vo.ReplyVO" useGeneratedKeys="true" keyProperty="id">
+    	INSERT INTO reply
+    	VALUES
+    		(#{id}, #{boardId}, #{grp}, 0, 1, #{replyText}, #{username}, NOW())
+    	ON DUPLICATE KEY UPDATE
+    		id 		 	= #{id},
+    		board_id 	= #{boardId},
+    		grp 	 	= #{grp},
+    		grps 		= 0,
+    		grpl  		= 1,
+    		reply_text 	= #{replyText},
+    		create_dt	= NOW()
+    </insert>
 </mapper>

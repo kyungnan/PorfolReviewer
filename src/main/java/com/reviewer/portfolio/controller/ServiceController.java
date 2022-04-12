@@ -126,11 +126,6 @@ public class ServiceController {
 		UserVO userVO = accountMapper.getByUsername(authentication.getName());
 		List<ReplyVO> replyList = replyMapper.getAll(id);
 		
-		// updateFlag 초기화
-		for (int i=0; i<replyList.size(); i++) {
-			replyList.get(i).setUpdateFlag(false);
-		}
-		
 		mav.addObject("porfolUploadVO", porfolUploadVO);
 		mav.addObject("thumbnailVO", thumbnailVO);
 		mav.addObject("attachFileVO", attachFileVO);

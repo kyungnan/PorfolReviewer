@@ -15,7 +15,7 @@ public class ReplyVO {
 	private String replyText;
 	private String username;
 	private String createDt;
-	private boolean updateFlag;
+	private boolean reReplyFlag;
 	
 	public void setCreateDt(LocalDateTime createDt) {
 		this.createDt = createDt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

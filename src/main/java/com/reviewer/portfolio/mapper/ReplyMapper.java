@@ -16,4 +16,5 @@ public interface ReplyMapper {
 	int insertReply(ReplyVO replyVO);
 	int updateReply(ReplyVO replyVO);
 	int deleteReply(@Param("id") Long id);
+	int insertReReply(ReplyVO replyVO);
 }
