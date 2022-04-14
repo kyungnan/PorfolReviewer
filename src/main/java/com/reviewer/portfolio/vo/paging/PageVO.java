@@ -20,16 +20,19 @@ public class PageVO {
     }
 
     public void calcPage(){
-        endPage = (int)(Math.ceil(criteria.getPage() / (double) displayPageNum) * displayPageNum);
+        startPage = (criteria.getPage() - 1) / (displayPageNum * displayPageNum) + 1;
+        endPage =  startPage + displayPageNum - 1;
 
-        startPage = (endPage - displayPageNum) + 1;
-
-        int tempEndPage = (int) (Math.ceil(totalCnt / (double) criteria.getCntPerPage()));
-
-        if (endPage > tempEndPage){
-            endPage = tempEndPage;
+        int totalPage = 0; 
+        if (totalCnt == 0) {
+        	totalPage = 1;
+        } else {
+        	totalPage = (int) Math.ceil((totalCnt / (double)criteria.getCntPerPage()));
         }
-
+        
+        if (endPage > totalPage) {
+        	endPage = totalPage;
+        } 
         prev = startPage == 1 ? false : true;
         next = endPage * criteria.getCntPerPage() >= totalCnt ? false : true;
     }

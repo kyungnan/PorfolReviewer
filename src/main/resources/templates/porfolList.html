@@ -88,7 +88,7 @@
 			                <a class="page-link" th:href="@{/porfolList(page=${pageVO.startPage}-1, cntPerPage=${pageVO.criteria.cntPerPage})}" tabindex="-1" aria-disabled="true">Previous</a>
 			            </li>
 			
-			            <li class="page-item" th:each="idx,iterStat : ${#numbers.sequence(pageVO.startPage,pageVO.endPage)}" th:classappend="${pageVO.criteria.page} == ${idx} ? active : null">
+			            <li class="page-item" th:each="idx : ${#numbers.sequence(pageVO.startPage,pageVO.endPage)}" th:classappend="${pageVO.criteria.page} == ${idx} ? active : null">
 			                <a class="page-link" th:href="@{/porfolList(page=${idx},cntPerPage=${pageVO.criteria.cntPerPage},category=${category})}" th:text="${idx}">1</a>
 			            </li>
 			

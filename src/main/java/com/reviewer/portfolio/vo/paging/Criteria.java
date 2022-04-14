@@ -17,7 +17,7 @@ public class Criteria {
     }
 
     public void setPage(int page){
-        if (page < 0){
+        if (page <= 0){
             this.page = 1;
             return;
         }
