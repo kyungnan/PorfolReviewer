@@ -4,6 +4,10 @@
 #fileInfoDiv {width: 38%; padding-left: 30px; font-size: 1.2rem; }
 #hashtags {font-weight: 600; color: #7950f2;}
 
+/* 좋아요 */
+span a span { color: gray; }
+.likeAtag img { width: 20px; height: 20px; }
+
 /* 댓글 */
 .profileImgDiv {width: 8%; }
 .replyContentDiv {width: 90%; }

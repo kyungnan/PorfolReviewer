@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.reviewer.portfolio.mapper.LikeMapper">
+	<!-- 게시글의 좋아요 수 -->
+	<select id="getTotLikeCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM likes
+		WHERE board_id = #{boardId}
+	</select>
+	
+	<!-- 게시물을 좋아요 한 유저인지 확인 -->
+	<select id="getLikedUserIdByBoardId" resultType="Long">
+		SELECT id
+		FROM likes
+		WHERE board_id = #{boardId}
+			AND user_id = #{userId}
+	</select>
+	
+	<!-- likeId로 like 조회  -->
+	<select id="getLikeByLikeId" resultType="int">
+	SELECT delete_yn
+	FROM likes
+	WHERE id = #{id}
+	</select>
+	
+	<!-- 좋아요 ON -->
+	<insert id="insertLikeOn">
+		INSERT INTO likes
+    		(board_id, user_id, delete_yn) 
+    	VALUES
+    		(#{boardId}, #{userId}, 1)
+	</insert>
+	
+	<!-- 좋아요 ON/OFF -->
+	<update id="updateLikeOnOff">
+		UPDATE likes
+		SET delete_yn = #{deleteYn}
+		WHERE id = #{id}
+	</update>
+</mapper>

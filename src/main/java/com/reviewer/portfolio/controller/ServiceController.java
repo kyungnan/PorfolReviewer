@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.reviewer.portfolio.mapper.AccountMapper;
 import com.reviewer.portfolio.mapper.AttachFileMapper;
+import com.reviewer.portfolio.mapper.LikeMapper;
 import com.reviewer.portfolio.mapper.PorfolBoardMapper;
 import com.reviewer.portfolio.mapper.ReplyMapper;
 import com.reviewer.portfolio.mapper.ThumbnailMapper;
@@ -52,6 +53,8 @@ public class ServiceController {
 	private final AccountMapper accountMapper;
 	@Autowired
 	private final ReplyMapper replyMapper;
+	@Autowired
+	private final LikeMapper likeMapper;
 
 	@GetMapping("/aboutUs")
 	public String aboutUs() {
@@ -129,6 +132,8 @@ public class ServiceController {
 		AttachFileVO attachFileVO = attachFileMapper.getById(porfolUploadVO.getFileId());	
 		UserVO userVO = accountMapper.getByUsername(authentication.getName());
 		List<ReplyVO> replyList = replyMapper.getAll(id);
+		Long likeId = likeMapper.getLikedUserIdByBoardId(id, userVO.getId());	//해당 글에 좋아요 한적 있는지 확인하기
+		Integer delete_yn = likeMapper.getLikeByLikeId(likeId);
 		
 		avoidDuplicatedViewCnt(id, request, response);
 		
@@ -137,6 +142,7 @@ public class ServiceController {
 		mav.addObject("attachFileVO", attachFileVO);
 		mav.addObject("userVO", userVO);
 		mav.addObject("replyList", replyList);
+		mav.addObject("likeDeleteYn", delete_yn);
 		mav.setViewName("porfolDetail");
 		return mav;		
 	}
