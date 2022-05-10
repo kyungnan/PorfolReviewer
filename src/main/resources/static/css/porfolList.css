@@ -20,7 +20,9 @@
 
 .card-body { text-align: left; }
 .card-body ul { display: inline-block; margin-left: -20px; }
+.card-body .card-title { width: 200px; height: 48px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box;
+  						-webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .card-body .card-text { width: 200px; height: 48px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box;
-  						-webkit-line-clamp: 2; -webkit-box-orient: vertical; color: gray; }
+  						-webkit-line-clamp: 2; -webkit-box-orient: vertical; color: gray;}
 
-#hashtags { font-size: 1.2rem; font-weight: 600; color: #7839ed; }
+#hashtags { font-size: 1.2rem; font-weight: 600; color: #7950f2; }

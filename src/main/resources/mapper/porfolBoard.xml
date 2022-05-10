@@ -29,14 +29,14 @@
 	        	</choose>
 	        </if>
 	    <choose>
-			<when test='searchFormVO.viewType == "view" '>
-				ORDER BY viewCnt DESC
+			<when test='searchFormVO.viewType != null and searchFormVO.viewType == "view" '>
+				ORDER BY view_cnt DESC
 			</when>
-			<when test='searchFormVO.viewType == "like" '>
-				ORDER BY likeCnt DESC
+			<when test='searchFormVO.viewType != null and searchFormVO.viewType == "like" '>
+				ORDER BY like_cnt DESC
 			</when>
 			<otherwise>
-				 ORDER BY create_dt DESC
+				ORDER BY create_dt DESC
 			</otherwise>
 		</choose>
         LIMIT 

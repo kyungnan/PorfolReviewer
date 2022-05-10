@@ -31,8 +31,9 @@
 		<section>
 			<div class="d-flex justify-content-evenly">
 				<div>
+					<input type="hidden" id="viewTypeVal" name="viewTypeVal">
 					<select id="viewType" name="viewType" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-						<option value="new" selected>최신순</option>
+						<option value="new">최신순</option>
 						<option value="view">조회순</option>
 						<option value="like">좋아요순</option>
 					</select>
@@ -89,11 +90,14 @@
 			            </li>
 			
 			            <li class="page-item" th:each="idx : ${#numbers.sequence(pageVO.startPage,pageVO.endPage)}" th:classappend="${pageVO.criteria.page} == ${idx} ? active : null">
-			                <a class="page-link" th:href="@{/porfolList(page=${idx},cntPerPage=${pageVO.criteria.cntPerPage},category=${category})}" th:text="${idx}">1</a>
+			            	<input type="hidden" class="idx" th:value="${idx}">
+			            	<input type="hidden" class="cntPerPage" th:value="${pageVO.criteria.cntPerPage}">
+			            	<input type="hidden" class="category" th:value="${category}">
+			                <a class="page-link pageIndex" th:href="@{/porfolList(page=${idx},cntPerPage=${pageVO.criteria.cntPerPage},category=${category})}" th:text="${idx}">1</a>
 			            </li>
 			
 			            <li class="page-item" th:if="${pageVO.next} == true and ${pageVO.endPage > 0}">
-			                <a class="page-link" th:href="@{porfolList(page=${pageVO.endPage}+1,cntPerPage=${pageVO.criteria.cntPerPage})}">Next</a>
+			                <a class="page-link" th:href="@{/porfolList(page=${pageVO.endPage}+1,cntPerPage=${pageVO.criteria.cntPerPage})}">Next</a>
 			            </li>
 			        </ul>
 			    </nav>

@@ -18,6 +18,7 @@ public class PorfolUploadVO {
 	private LocalDateTime createDt;
 	private LocalDateTime modDt;
 	private int deleteYn;
-	private Long viewCnt;
-	private Long likeCnt;
+	private int viewCnt;
+	private int likeCnt;
+	private String viewType;
 }

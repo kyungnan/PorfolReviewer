@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -90,6 +91,28 @@ public class ServiceController {
 		return mav;
 	}
 	
+	// 포폴 목록(viewType)
+	@GetMapping("/porfolList/{viewType}")
+	public @ResponseBody List<PorfolUploadVO> porfolListViewType(@PathVariable String viewType, @ModelAttribute("criteria") Criteria criteria, SearchFormVO searchFormVO) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("criteria", criteria);
+		map.put("searchFormVO", searchFormVO);
+		List<PorfolUploadVO> porfolList = porfolBoardService.getAll((HashMap<String, Object>) map);
+		
+		Map<Long, String> thumbnailMap = new HashMap<>();
+		for (int i=0; i<porfolList.size(); i++) {
+			Long thumbnailId = porfolList.get(i).getThumbnailId();
+			ThumbnailVO thumbnailVO = thumbnailMapper.getById(thumbnailId);
+			thumbnailMap.put(thumbnailId, thumbnailVO.getServerThumbnailName());
+		}
+
+		for (int i=0; i<porfolList.size(); i++) {
+			porfolList.get(i).setViewType(viewType);
+		}
+		PageVO pageVO = getPageVO(criteria, porfolBoardMapper.getAllCnt((HashMap<String, Object>) map));
+		return porfolList;
+	}
+	
 	// 페이징 메서드
     private PageVO getPageVO(@ModelAttribute("criteria") Criteria criteria, int totalCnt) {
     	PageVO pageVO = new PageVO();
@@ -125,15 +148,20 @@ public class ServiceController {
 	}
 	
 	// 포폴 상세보기
+	@SuppressWarnings("unused")
 	@GetMapping("/porfolDetail/{id}")
 	public ModelAndView getPorfolDetail(Authentication authentication , @PathVariable Long id, ModelAndView mav, HttpServletRequest request, HttpServletResponse response) {		
 		PorfolUploadVO porfolUploadVO = porfolBoardMapper.getById(id);
+		porfolUploadVO.setLikeCnt(likeMapper.getTotLikeCnt(id));
 		ThumbnailVO thumbnailVO = thumbnailMapper.getById(porfolUploadVO.getThumbnailId());
 		AttachFileVO attachFileVO = attachFileMapper.getById(porfolUploadVO.getFileId());	
 		UserVO userVO = accountMapper.getByUsername(authentication.getName());
 		List<ReplyVO> replyList = replyMapper.getAll(id);
 		Long likeId = likeMapper.getLikedUserIdByBoardId(id, userVO.getId());	//해당 글에 좋아요 한적 있는지 확인하기
 		Integer delete_yn = likeMapper.getLikeByLikeId(likeId);
+		if (delete_yn == null) {
+			delete_yn = 0;
+		}
 		
 		avoidDuplicatedViewCnt(id, request, response);
 		
@@ -157,7 +185,6 @@ public class ServiceController {
 	    		visitor = 1;
 	    		
 	    		if (cookie.getValue().contains(String.valueOf(id))) {
-	    			System.out.println("visitif 통과");
 	    		} else {
 	    			cookie.setValue(cookie.getValue() + "_" + String.valueOf(id));
 	    			response.addCookie(cookie);
@@ -186,4 +213,14 @@ public class ServiceController {
 		return "redirect:/porfolList";
 	}
 	
+	// 포폴 썸네일
+	@GetMapping("/thumbnail/{id}")
+	public @ResponseBody Map<String, String> getThumbnailById(@PathVariable String id) {
+		Long thumbnailId = Long.parseLong(id);
+		ThumbnailVO vo = thumbnailMapper.getById(thumbnailId);
+		
+		Map<String, String> map = new HashMap<>();
+		map.put(id, vo.getServerThumbnailName());
+		return map;
+	}
 }
