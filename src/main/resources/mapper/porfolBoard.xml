@@ -82,6 +82,19 @@
         	delete_yn = '0' AND id = #{id}
     </select>
     
+    <!-- 베스트 포폴 조회 -->
+    <select id="getBestPorfol" resultType="com.reviewer.portfolio.vo.PorfolUploadVO">
+		SELECT *
+		FROM 
+			(SELECT id, category, title, url, file_id AS fileId, thumbnail_id AS thumbnailId, description, hashtags, user_id AS userId, 
+					RANK() OVER (ORDER BY like_cnt DESC, view_cnt DESC) AS 'LikeRank'
+			 FROM board
+			 GROUP BY category
+			 ) AS R
+		WHERE 
+			<![CDATA[ R.LikeRank <= 3 ]]>
+    </select>
+    
     <!-- Porfol 등록 -->
     <insert id="insertPorfol" parameterType="com.reviewer.portfolio.vo.PorfolUploadVO">
     	INSERT INTO board

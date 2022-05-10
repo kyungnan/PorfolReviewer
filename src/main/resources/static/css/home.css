@@ -12,7 +12,20 @@
 #categoryNavi > img {width: 200px; height: 200px;}
 
 /* 베스트 포폴 */
-#allViewBtn {background-color: #7839ed; color: #fff; border-radius: 5px;}
+#allViewBtn {background-color: #7950f2; color: #fff; border-radius: 5px;}
+
+.card { display: flex; flex-wrap: wrap; width: 18rem;  margin: 10px 0;}
+.card .thumbnailDiv{ width: 100%; height: 200px;}
+
+.thumbnail {width: 100%; height: 200px; object-fit: cover;}
+#bestPortfolio > div.d-flex.justify-content-evenly.mt-4.mb-5 > div > div.card-body { text-align: left; padding: 20px;}
+.card-body ul { display: inline-block; margin-left: -20px;}
+.card-body .card-title { width: 200px; height: 48px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box;
+  						-webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.card-body .card-text { width: 200px; height: 48px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box;
+  						-webkit-line-clamp: 2; -webkit-box-orient: vertical; color: gray;}
+
+#hashtags { font-size: 1.2rem; font-weight: 600; color: #7950f2; }
 
 /* 서비스 소개 */
 #serviceInfo {height: 500px;}
