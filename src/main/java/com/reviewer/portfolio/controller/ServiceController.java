@@ -62,6 +62,11 @@ public class ServiceController {
 		return "aboutUs";
 	}
 	
+	@GetMapping("/faq")
+	public String faq() {
+		return "faq";
+	}
+	
 	// 포폴 목록
 	@GetMapping("/porfolList")
 	public ModelAndView porfolList(@ModelAttribute("criteria") Criteria criteria, ModelAndView mav, SearchFormVO searchFormVO) {

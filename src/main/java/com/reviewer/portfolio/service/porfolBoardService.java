@@ -56,5 +56,11 @@ public class porfolBoardService {
 	public List<PorfolUploadVO> getBestPorfol() {
 		return porfolBoardMapper.getBestPorfol();
 	}
+
+	// 신규 업로드 포폴 스케줄러
+	@Scheduled(cron = "0 * * * * *")	// 1분 마다 실행
+	public List<PorfolUploadVO> getNewUploadPorfol() {
+		return porfolBoardMapper.getNewUploadPorfol();
+	}
 	
 }

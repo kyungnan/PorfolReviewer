@@ -1,6 +1,8 @@
 package com.reviewer.portfolio.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,7 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String home(Model model) {
+		// 베스트 포폴
 		List<PorfolUploadVO> bestPorfolList = porfolBoardService.getBestPorfol();
 		PorfolUploadVO bestFrontend = null;
 		PorfolUploadVO bestBackend = null;
@@ -43,12 +46,25 @@ public class HomeController {
 		ThumbnailVO backendThumbnail = thumbnailMapper.getById(bestBackend.getThumbnailId());
 		ThumbnailVO designThumbnail = thumbnailMapper.getById(bestDesign.getThumbnailId());
 		
+		// 신규 업로드 포폴
+		List<PorfolUploadVO> newUploadPorfolList = porfolBoardService.getNewUploadPorfol();
+		
+		Map<Long, String> thumbnailMap = new HashMap<>();
+		for (int i=0; i<newUploadPorfolList.size(); i++) {
+			Long thumbnailId = newUploadPorfolList.get(i).getThumbnailId();
+			ThumbnailVO thumbnailVO = thumbnailMapper.getById(thumbnailId);
+			thumbnailMap.put(thumbnailId, thumbnailVO.getServerThumbnailName());
+		}
+		
 		model.addAttribute("bestFrontend", bestFrontend);
 		model.addAttribute("frontendThumbnail", frontendThumbnail.getServerThumbnailName());
 		model.addAttribute("bestBackend", bestBackend);
 		model.addAttribute("backendThumbnail", backendThumbnail.getServerThumbnailName());
 		model.addAttribute("bestDesign", bestDesign);
 		model.addAttribute("designThumbnail", designThumbnail.getServerThumbnailName());
+		
+		model.addAttribute("newUploadPorfolList", newUploadPorfolList);
+		model.addAttribute("thumbnailMap", thumbnailMap);
 		return "home";
 	}
 }

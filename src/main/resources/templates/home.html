@@ -112,15 +112,43 @@
 						</div>
 						<!-- Q & A -->
 						<div>
-							<a href="#"><img src="/images/faq.jpg" class="card-img-top" alt="..."></a>
+							<a href="/faq"><img src="/images/faq.jpg" class="card-img-top" alt="..."></a>
 						</div>
 					</div>
 				</div>
 			</section>
-			<!-- 포폴리스트 -->
+			<!-- 신규 업로드 포폴 -->
 			<section>
-				<div id="porfolList">
-					
+				<div id="porfolList" class="mt-5 mb-5">
+					<div class="d-flex justify-content-between"><h2 class="fs-5 fw-bolder d-inline-block">새로운 포트폴리오</h2 ><a id="allViewBtn" class="text-decoration-none btn fs-6" href="/porfolList">모두 보기</a></div>
+					<div class="d-flex justify-content-evenly mt-4 mb-5">
+						<div class="card" th:each="newUploadPorfolList:${newUploadPorfolList}">
+							<div th:each="entry:${thumbnailMap}">
+								<div class="thumbnailDiv" th:if="${newUploadPorfolList.thumbnailId == entry.key}">
+						  			<a th:href="@{/porfolDetail/{boardId}(boardId = ${newUploadPorfolList.id})}">
+						  				<img id="thumbnail" th:src="|/upload/thumbnail/${entry.value}|" class="card-img-top" alt="thumbnail..">
+						  			</a>
+						  		</div>
+							</div>
+							<div class="card-body">
+								<ul class="list-group list-group-flush">
+						      		<li class="list-group-item" th:if="${#strings.equals(newUploadPorfolList.category, 'frontend')}">
+						      			<img src="/images/front.png"><span>프론트엔드</span>
+						      		</li>
+						      		<li class="list-group-item" th:if="${#strings.equals(newUploadPorfolList.category, 'backend')}">
+						      			<img src="/images/back.png"><span>백엔드</span>
+						      		</li>
+						      		<li class="list-group-item" th:if="${#strings.equals(newUploadPorfolList.category, 'design')}">
+						      			<img src="/images/design.png"><span>디자인</span>
+						      		</li>
+						  		</ul>
+						    	<h5 class="card-title" th:text="${newUploadPorfolList.title}"></h5>
+						    	<p class="card-text" th:text="${newUploadPorfolList.description}"></p>
+						    	
+						    	<p id="hashtags" th:text="${newUploadPorfolList.hashtags}"></p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</section>
 			<!-- 포폴리뷰어 서비스 이용 후기 -->
@@ -162,7 +190,13 @@
 				</div>
 			</section>
 			<!-- 포폴리뷰어 시작하기 -->
-			<section></section>
+			<section>
+				<div id="startPorfol" class="text-center">
+					<h2>당신의 포트폴리오를 올려주세요!</h2>
+					<p class="mb-5">포폴리뷰어들이 도움되는 조언을 해드립니다.</p>
+					<a id="startBtn" class="text-decoration-none" href="/porfolStart">시작하기</a>
+				</div>
+			</section>
 		</div>
 	</main>
 	<div th:insert="common/footer"></div>

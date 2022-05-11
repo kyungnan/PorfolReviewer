@@ -2,48 +2,48 @@
 header{padding: 0 20px;}
 
 /* 네비게이션 */
-body > div:nth-child(1) > header > ul > li > a{
+#logo {
+	color: #7950f2;
+	font-size: 2rem;
+	margin: 0 auto;
+}
+
+#logo:hover{
+	opacity: 0.8;
+}
+
+.navi {
+	margin: 10px;
+}
+
+.navi a {
+	text-decoration: none;
 	color: #373538;
 	font-weight: 600;
 	font-size: 18px;
+	width: 600px;
+	margin-right: 20px;
 }
 
-body > div:nth-child(1) > header > ul > li > a:hover{
-	color: #7839ed;
+.navi a:hover{
+	color: #7950f2;
 }
 
 /* 로그인, 회원가입, 로그아웃 버튼 */
-body > div:nth-child(1) > header > ul > li:nth-child(5) > a {
-	border: 2px solid #7839ed;
+.userNavi{
+	width: 560px;
+	text-align: right;
+}
+body > div:nth-child(1) > header > div > div.navi.userNavi > a {
+	border: 2px solid #7950f2;
 	border-radius: 5px;
-	color: #7839ed;
-	margin-right: 10px;
+	color: #7950f2;
+	margin-right: 5px;
+	padding: 10px;
 }
 
-body > div:nth-child(1) > header > ul > li:nth-child(5) > a:hover{
-	background-color: #7839ed;
+body > div:nth-child(1) > header > div > div.navi.userNavi > a:hover{
+	background-color: #7950f2;
 	color: #fff;
-}
-
-body > div:nth-child(1) > header > ul > li:nth-child(6) > a {
-	border: 2px solid #7839ed;
-	border-radius: 5px;
-	color: #7839ed;
-	margin-right: 10px;
-}
-
-body > div:nth-child(1) > header > ul > li:nth-child(6) > a:hover{
-	background-color: #7839ed;
-	color: #fff;
-}
-
-body > div:nth-child(1) > header > ul > li:nth-child(7) > a {
-	border: 2px solid #7839ed;
-	border-radius: 5px;
-	color: #7839ed;
-}
-
-body > div:nth-child(1) > header > ul > li:nth-child(7) > a:hover{
-	background-color: #7839ed;
-	color: #fff;
+	padding: 10px;
 }

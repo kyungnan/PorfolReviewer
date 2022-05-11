@@ -95,6 +95,17 @@
 			<![CDATA[ R.LikeRank <= 3 ]]>
     </select>
     
+    <!-- 신규 업로드 포폴 조회 -->
+    <select id="getNewUploadPorfol" resultType="com.reviewer.portfolio.vo.PorfolUploadVO">
+    	SELECT *
+		FROM (SELECT id, category, title, url, file_id AS fileId, thumbnail_id AS thumbnailId, description, hashtags, user_id AS userId, 
+		  	         RANK() OVER (ORDER BY create_dt DESC) AS 'createRank'
+		FROM 
+			board) AS R
+		WHERE 
+			<![CDATA[ R.createRank <= 3 ]]>
+    </select>
+    
     <!-- Porfol 등록 -->
     <insert id="insertPorfol" parameterType="com.reviewer.portfolio.vo.PorfolUploadVO">
     	INSERT INTO board

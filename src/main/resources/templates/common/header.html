@@ -10,12 +10,27 @@
 <title></title>
 </head>
 <body>
-	<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-	<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-		<svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-		<span class="fs-4">PORFOLREVIEWER</span>
-    </a>
-    <ul class="nav nav-pills">
+	<!-- <header class="class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom""> -->
+	<header>
+	<div class="d-flex justify-content-between">
+		<div class="navi">
+	    	<a href="/porfolList" aria-current="page">포트폴리오 리뷰하기</a>
+	    	<a href="/porfolStart">내 포트폴리오 리뷰받기</a>
+	    	<a href="/aboutUs">포폴리뷰어 소개</a>
+	    </div>
+	    <div class="navi">
+	    	<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+				<svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+				<span id="logo">PORFOLREVIEWER</span>
+	    	</a>
+	    </div>
+	    <div class="navi userNavi mt-4">
+	    	<a href="/account/logout" sec:authorize="isAuthenticated()">로그아웃</a>
+	    	<a href="/account/login" sec:authorize="isAnonymous()">로그인</a>
+	    	<a href="/account/join" sec:authorize="isAnonymous()">회원가입</a>
+	    </div>
+	</div>
+<!--     <ul class="nav nav-pills">
      	<li class="nav-item"><a href="/porfolList" class="nav-link" aria-current="page">포트폴리오 리뷰하기</a></li>
      	<li class="nav-item"><a href="/porfolStart" class="nav-link">내 포트폴리오 리뷰받기</a></li>
      	<li class="nav-item"><a href="/aboutUs" class="nav-link">포폴리뷰어 소개</a></li>
@@ -23,7 +38,7 @@
       	<li class="nav-item"><a href="/account/logout" class="nav-link" sec:authorize="isAuthenticated()">로그아웃</a></li>
 	    <li class="nav-item"><a href="/account/login" class="nav-link" sec:authorize="isAnonymous()">로그인</a></li>
 	    <li class="nav-item"><a href="/account/join" class="nav-link" sec:authorize="isAnonymous()">회원가입</a></li>
-    </ul>
+    </ul> -->
 	</header>
 </body>
 </html>

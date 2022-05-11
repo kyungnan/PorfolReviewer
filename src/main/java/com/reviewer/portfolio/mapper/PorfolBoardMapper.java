@@ -14,6 +14,7 @@ import com.reviewer.portfolio.vo.PorfolUploadVO;
 public interface PorfolBoardMapper {
 	List<PorfolUploadVO> getAll(HashMap<String, Object> map);
 	List<PorfolUploadVO> getBestPorfol();
+	List<PorfolUploadVO> getNewUploadPorfol();
 	Integer getAllCnt(HashMap<String, Object> map);
 	PorfolUploadVO getById(@Param("id") Long id);
 	Long insertPorfol(PorfolUploadVO userVO);
