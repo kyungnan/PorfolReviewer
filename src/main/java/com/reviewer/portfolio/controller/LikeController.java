@@ -33,6 +33,7 @@ public class LikeController {
 			likeVO.setUserId(userVO.getId());
 			likeVO.setDeleteYn(1);
 			likeMapper.insertLikeOn(likeVO);
+			delete_yn = likeVO.getDeleteYn();
 		} else if (delete_yn == 0) {
 			delete_yn = 1;
 			likeMapper.updateLikeOnOff(likeId, delete_yn);

@@ -2,5 +2,5 @@
 * {padding: 0; margin: 0;}
 
 /* 카테고리 버튼 */
-.btn-group label {border-color: #7839ed; color: #7839ed; width: 200px; height: 100px; line-height: 80px; font-weight: 600;}
-.btn-group label:hover{border-color: #fff; color: #fff; background-color: #7839ed;}
+.btn-group label {border-color: #7950f2; color: #7950f2; width: 200px; height: 100px; line-height: 80px; font-weight: 600;}
+.btn-group label:hover{border-color: #fff; color: #fff; background-color: #7950f2;}

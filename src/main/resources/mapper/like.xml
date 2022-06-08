@@ -6,6 +6,7 @@
 		SELECT COUNT(*)
 		FROM likes
 		WHERE board_id = #{boardId}
+			AND delete_yn = 1
 	</select>
 	
 	<!-- 게시물을 좋아요 한 유저인지 확인 -->
@@ -17,7 +18,7 @@
 	</select>
 	
 	<!-- likeId로 like 조회  -->
-	<select id="getLikeByLikeId" resultType="int">
+	<select id="getLikeByLikeId" resultType="Integer">
 	SELECT delete_yn
 	FROM likes
 	WHERE id = #{id}
