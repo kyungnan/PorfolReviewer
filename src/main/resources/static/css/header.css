@@ -48,3 +48,14 @@ body > div:nth-child(1) > header > div > div.navi.userNavi > a:hover{
 	color: #fff;
 	padding: 10px;
 }
+
+/* 푸시 알림 */
+#socketAlertDiv{
+	height: 50px;
+}
+
+#socketAlert{
+	width: 40%;
+    float: right;
+    display: none;
+}

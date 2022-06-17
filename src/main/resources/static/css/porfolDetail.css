@@ -1,4 +1,5 @@
 /* 썸네일 , 포폴 기본 정보 */
+#rightarrow {width: 30px; height: 30px;}
 #thumbnailDiv { width: 60%; }
 #thumbnail{ height: 500px; object-fit: cover; border: 1px solid #e6e6e6; border-radius: 5px; }
 #fileInfoDiv {width: 38%; padding-left: 30px; font-size: 1.2rem; }

@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -158,6 +161,7 @@ public class ServiceController {
 	public ModelAndView getPorfolDetail(Authentication authentication , @PathVariable Long id, ModelAndView mav, HttpServletRequest request, HttpServletResponse response) {		
 		PorfolUploadVO porfolUploadVO = porfolBoardMapper.getById(id);
 		porfolUploadVO.setLikeCnt(likeMapper.getTotLikeCnt(id));
+		UserVO boardWriterUserVO = accountMapper.getById(porfolUploadVO.getUserId());
 		ThumbnailVO thumbnailVO = thumbnailMapper.getById(porfolUploadVO.getThumbnailId());
 		AttachFileVO attachFileVO = attachFileMapper.getById(porfolUploadVO.getFileId());	
 		UserVO userVO = accountMapper.getByUsername(authentication.getName());
@@ -176,6 +180,7 @@ public class ServiceController {
 		mav.addObject("userVO", userVO);
 		mav.addObject("replyList", replyList);
 		mav.addObject("likeDeleteYn", delete_yn);
+		mav.addObject("boardWriter", boardWriterUserVO.getUsername());
 		mav.setViewName("porfolDetail");
 		return mav;		
 	}
@@ -208,7 +213,6 @@ public class ServiceController {
 	// 포폴 삭제
 	@GetMapping("/porfolDelete")
 	public String setPorfolDelete(@RequestParam Long id, ModelAndView mav) {
-		System.out.println(id);
 		PorfolUploadVO porfolUploadVO = porfolBoardMapper.getById(id);
 
 		porfolBoardMapper.deletePorfol(id);
@@ -227,5 +231,16 @@ public class ServiceController {
 		Map<String, String> map = new HashMap<>();
 		map.put(id, vo.getServerThumbnailName());
 		return map;
+	}
+	
+	// 포폴 다운로드
+	@GetMapping("/download/{id}")
+	@ResponseBody
+	public ResponseEntity<Resource> downloadPorfol(@PathVariable String id) {
+		AttachFileVO attachFileVO = attachFileMapper.getById(Long.parseLong(id));
+		String path = "/upload/files/" + attachFileVO.getServerFileName();
+		
+		Resource file = porfolBoardService.downloadPorfol(attachFileVO);
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
 	}
 }

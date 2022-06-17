@@ -20,6 +20,8 @@
 		<section>
 			<div class="container">
 				<div class="d-flex justify-content-between mb-4">
+					<input type="hidden" id="boardWriter" th:value="${boardWriter}">
+					<input type="hidden" id="replyWriter" th:value="${userVO.username}">
 					<ul class="list-group list-group-flush d-inline-block">
 						<li class="list-group-item" th:if="${#strings.equals(porfolUploadVO.category, 'frontend')}">
 							<img src="/images/front.png"><span>프론트엔드</span>
@@ -39,19 +41,19 @@
 						<a class="btn btn-outline-dark" th:href="@{/porfolList}">목록</a>
 					</div>
 				</div>
-				<h1 th:text="${porfolUploadVO.title}" class="mb-4">포폴 제목</h1>
+				<h1 id="porfolTitle" th:text="${porfolUploadVO.title}" class="mb-4">포폴 제목</h1>
 				<div class="mb-4">
 					<div class="d-inline-block" id="thumbnailDiv">
 						<img id="thumbnail" th:src="|/upload/thumbnail/${thumbnailVO.serverThumbnailName}|" class="card-img-top" alt="thumbnail..">
 					</div>
 					<div class="d-inline-block" id="fileInfoDiv">
-						<p>url : <a th:text="${porfolUploadVO.url}" target='_blank'></a></p>
-						<p>첨부파일 : <span th:text="${attachFileVO.originFileName}"></span></p>
+						<p>url : <a id="porfolUrl" th:text="${porfolUploadVO.url}" target='_blank'></a></p>
+						<p>첨부파일 : <a th:href="@{|/download/${attachFileVO.id}|}"><span th:text="${attachFileVO.originFileName}"></span></a></p>
 						<p>조회수 : <span th:text="${porfolUploadVO.viewCnt}"></span></p>
 						<p>좋아요 : <span th:text="${porfolUploadVO.likeCnt}"></span></p>
 					</div>
 				</div>
-				<p th:text="${porfolUploadVO.hashtags}" id="hashtags">사용언어 #xx 로 표시..</p>
+				<p th:text="${porfolUploadVO.hashtags}" id="hashtags"></p>
 			</div>
 		</section>
 		
@@ -106,12 +108,15 @@
 						<div th:id="${replyList.id}" class="card-body replyList" th:each="replyList : ${replyList}">
 							<input class="replyId" type="hidden" th:value="${replyList.id}">
 							<div class="d-inline-block profileImgDiv">
+								<span th:if="${replyList.grpl} == 1">
+									<img id="rightarrow" alt="화살표" src="/images/rightarrow.png">
+								</span>
 								<img class="profileImg" alt="" src="/images/people3.png">
 							</div>
 							<div class="d-inline-block replyContentDiv">
 								<ul class="list-group list-group-flush">
 								    <li class="list-group-item">
-								    	<h6 class="username" th:text="${replyList.username}"></h6>
+								    	<h6 id="originReplyUsername" class="username" th:text="${replyList.username}"></h6>
 										<p class="replyTextOrigin" th:text="${replyList.replyText}"></p>
 										<p th:text="${replyList.createDt}"></p>
 										<div th:if="${replyList.grpl} == 0" class="d-inline-block">
