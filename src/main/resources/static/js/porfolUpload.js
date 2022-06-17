@@ -23,7 +23,7 @@ $(document).ready(function() {
 			return;
 		}
 		if (hashtags.val() == ''){
-			alert('사용 언어를 입력해주세요.');
+			alert('해시태그를 입력해주세요.');
 			hashtags.focus();
 			return;
 		}

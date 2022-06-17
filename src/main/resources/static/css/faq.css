@@ -1,3 +1,8 @@
-h1, h4 {color: #7950f2;}
+h1, h4 {color: #7950f2; font-weight: bold;}
 #faq {margin: 0 auto; width: 1000px;}
-.content {border: 1px solid #eee; padding: 20px 10px; margin: 20px;}
+.faqLi {border: 1px solid #eee; border-radius: 15px; padding: 20px 10px; margin: 20px;}
+.content {display: none;}
+.title:hover {
+	cursor: pointer;
+	opacity: 0.9;
+}

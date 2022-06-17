@@ -23,7 +23,7 @@
 	        		<when test='searchFormVO.searchType == "title" '>
 	        			AND title LIKE CONCAT('%', TRIM(#{searchFormVO.searchKeyword}), '%') 
 	        		</when>
-	        		<when test='searchFormVO.searchType == "lang"' >
+	        		<when test='searchFormVO.searchType == "hashtag"' >
 	        			AND hashtags LIKE CONCAT ('%', TRIM(#{searchFormVO.searchKeyword}), '%')
 	        		</when>
 	        	</choose>
@@ -64,7 +64,7 @@
 	        		<when test='searchFormVO.searchType == "title" '>
 	        			AND title LIKE CONCAT('%', TRIM(#{searchFormVO.searchKeyword}), '%') 
 	        		</when>
-	        		<when test='searchFormVO.searchType == "lang"' >
+	        		<when test='searchFormVO.searchType == "hashtag"' >
 	        			AND hashtags LIKE CONCAT ('%', TRIM(#{searchFormVO.searchKeyword}), '%')
 	        		</when>
 	        	</choose>

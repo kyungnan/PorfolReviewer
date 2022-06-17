@@ -11,4 +11,5 @@ import com.reviewer.portfolio.vo.AttachFileVO;
 public interface AttachFileMapper {
 	AttachFileVO getById(@Param("id") Long id);
 	Long insertFile(AttachFileVO attachFileVO);
+	int deleteFile(@Param("id") Long id);
 }
