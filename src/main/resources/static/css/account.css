@@ -5,6 +5,8 @@
 
 .form-label {font-weight: 600;}
 
+#timer {margin-left: 20px; color: #818b9c;}
+
 #joinBtn {background-color: #7950f2; border: 1px solid #7950f2; color: #fff; font-weight: 600; height: 60px; width: 300px;}
 #joinBtn {color: #fff; opacity: 0.9;}
 

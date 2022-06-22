@@ -39,6 +39,11 @@
 				<div class="mb-3">
 				  <label for="username" class="form-label">이메일</label>
 				  <input type="email" class="form-control" id="email" name="email" placeholder="email@google.com">
+				  <input type="button" value="인증번호 전송" id="certifiedEmail" class="btn btn-primary">
+				  <input type="hidden" id="serverCertifiedStr">
+				  <input type="text" id="inputCertifiedStr" class="form-control w-25 d-inline-block mt-3">
+				  <input type="button" value="인증확인" id="certifiedCheck" class="btn btn-primary">
+				  <span id="timer"></span>
 				</div>
 				
 				<div class="mb-3">
