@@ -1,6 +1,57 @@
+var isPause = false;	/* 이메일 인증번호 유효시간 플래그 */
+var myVar;				/* 이메일 인증번호 유효시간 함수 */
 $(document).ready(function() {
+	/* 중복검사 */
+	 $(".duplicateBtn").on("click", function () {
+		var idx = $(this).index();		// idx=0 (username), idx=2 (email)
+		var username = $("#username").val();
+		var email = $("#email").val();
+		var data;
+		if (idx == 0){
+	        if (username == ""){
+	            alert("username을 입력하세요.");
+	            $("#username").focus();
+	            return false;
+	        }
+
+			data = {
+						"type"	: "username",
+			            "parameter" : username
+			        }
+		} else if (idx == 2) {
+			if (email == ""){
+	            alert("email을 입력하세요.");
+	            $("#email").focus();
+	            return false;
+	        }
+
+			data = {
+						"type"	: "email",
+			            "parameter" : email
+			        }
+		}
+
+        $.ajax({
+            url: "/account/duplicate",
+            type: "POST",
+            data: data
+        }).done(function(result){
+            if (result === "notExist") {
+                alert("사용가능 합니다.");
+            } else {
+                alert("이미 존재합니다.");
+            }
+        }).fail(function(error){
+            alert(JSON.stringify(error));
+        });
+    });
+	
 	/* 이메일 인증 */
 	$('#certifiedEmail').on('click', function(){
+		/* 인증번호 전송 버튼 여러번 클릭 시 기존 타이머 초기화 */
+		var time = -1;
+		clearInterval(myVar);
+		
 		var data = {
 			email : $('#email').val()
 		};
@@ -9,8 +60,7 @@ $(document).ready(function() {
 			type: 'post',
 			data: data,
 			dataType: "text",
-			success: [function(resp){
-				$('#serverCertifiedStr').val(resp);
+			success: [function(){
 			}],
 			error: function(resp){
 				console.log(resp);
@@ -18,10 +68,10 @@ $(document).ready(function() {
 		})
 		
 		/* 인증 유효시간 타이머 */
-		var time = 60 * 3;
-		var myVar;
+		time = 60 * 1;
+		isPause = false;
 		
-		if (time > 0){
+		if (time > 0 && isPause == false){
 			function timer(){
 				myVar = setInterval(alertFunc, 1000);
 			}
@@ -37,11 +87,49 @@ $(document).ready(function() {
 			$('#timer').text(min + ' : '  + sec);
 			
 			if (time == 0){
-				clearInterval(myVar);
-				$('#serverCertifiedStr').val('');
+				$.ajax({
+					url: '/account/certifiedExpiration',
+					type: 'get',
+					success: [function(){
+						isPause = true;
+						clearInterval(myVar);
+						$('#timer').text('인증번호 유효시간 만료되었습니다.');
+					}],
+					error: function(resp){
+						console.log(resp);
+					}
+				})
 			} 
 			time--;
 		}
+	});
+	
+	/* 이메일 인증 확인 완료 */
+	$('#certifiedCheck').on('click', function(){
+		var inputCertifiedStr = $('#inputCertifiedStr').val();
+		var data = {
+			"inputCertifiedStr" : inputCertifiedStr
+		}
+		
+		$.ajax({
+			url: '/account/certifiedCheck',
+			type: 'get',
+			data: data,
+			success: [function(resp){
+				if (resp == "인증 완료"){
+					isPause = true;
+					clearInterval(myVar);
+					$('#timer').text('인증 완료');
+				} else {
+					alert("인증번호가 일치하지 않습니다.");
+					$('#inputCertifiedStr').focus();
+					return;
+				}
+			}],
+			error: function(resp){
+				console.log(resp);
+			}
+		})
 	});
 	
 	/* 유효성 검사 */
@@ -50,7 +138,6 @@ $(document).ready(function() {
 		var password = $('#password');
 		var passwordCheck = $('#passwordCheck');
 		var email = $('#email');
-		var serverCertifiedStr = $('#serverCertifiedStr');
 		var inputCertifiedStr = $('#inputCertifiedStr');
 		
 		var regExp = /^[a-zA-Z0-9]{4,12}$/;		// username 과 password 유효성검사 정규식
@@ -85,10 +172,15 @@ $(document).ready(function() {
 			inputCertifiedStr.focus();
 			return;
 		}
-
-		if (inputCertifiedStr.val() != serverCertifiedStr.val()){
-			alert("인증번호가 일치하지 않습니다.");
+		
+		if ($('#timer').text() != '인증 완료'){
+			alert("이메일 인증을 완료해주세요.");
 			inputCertifiedStr.focus();
+			return;
+		}
+		
+		if (!$('.chk').eq(0).is(':checked') || !$('.chk').eq(1).is(':checked')){
+			alert("필수 약관에 체크해주세요.");
 			return;
 		}
 		

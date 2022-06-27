@@ -16,6 +16,11 @@
         select * from user where username = #{username}
     </select>
     
+    <!-- email로 User 조회 -->
+    <select id="getByEmail" parameterType="String" resultType="com.reviewer.portfolio.vo.UserVO">
+    	select * from user where email = #{email}
+    </select>
+    
     <!-- User 등록 -->
     <insert id="insertUser" parameterType="com.reviewer.portfolio.vo.UserVO">
     	insert into user(username, password, email) values(#{username}, #{password}, #{email})
@@ -25,4 +30,15 @@
     <update id="deleteUser" parameterType="Long">
         delete from user where id=#{id}
     </update>
+    
+    <!-- 이메일 인증번호 등록 -->
+    <insert id="insertCertificationNum" parameterType="com.reviewer.portfolio.vo.CertificationVO">
+    	insert into certification(jsession_id, certification_num) values (#{jsessionId}, #{certificationNum})
+    	on duplicate key update certification_num = #{certificationNum}
+    </insert>
+    
+    <!-- 쿠키값으로 인증번호 조회 -->
+    <select id="getByJsessionId" parameterType="String" resultType="String">
+    	select certification_num AS certificationNum from certification where jsession_id = #{jsessionId}
+    </select>
 </mapper>
