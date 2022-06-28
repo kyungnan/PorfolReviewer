@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.reviewer.portfolio.mapper.ThumbnailMapper;
@@ -32,14 +33,21 @@ public class HomeController {
 		PorfolUploadVO bestFrontend = null;
 		PorfolUploadVO bestBackend = null;
 		PorfolUploadVO bestDesign = null;
-		for (PorfolUploadVO vo : bestPorfolList) {
-			if (vo.getCategory().equals("frontend")) {
-				bestFrontend = vo;
-			} else if (vo.getCategory().equals("backend")) {
-				bestBackend = vo;
-			} else {
-				bestDesign = vo;
+
+		if (!ObjectUtils.isEmpty(bestPorfolList)) {
+			for (PorfolUploadVO vo : bestPorfolList) {
+				if (vo.getCategory().equals("frontend")) {
+					bestFrontend = vo;
+				} else if (vo.getCategory().equals("backend")) {
+					bestBackend = vo;
+				} else {
+					bestDesign = vo;
+				}
 			}
+		} else {
+			bestFrontend = new PorfolUploadVO();
+			bestBackend = new PorfolUploadVO();
+			bestDesign = new PorfolUploadVO();
 		}
 		
 		ThumbnailVO frontendThumbnail = thumbnailMapper.getById(bestFrontend.getThumbnailId());
