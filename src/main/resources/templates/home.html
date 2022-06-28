@@ -44,26 +44,26 @@
 						<!-- 프론트엔드 -->
 						<div class="card" style="width: 18rem;">
 							<div class="thumbnailDiv">
-						  			<a th:href="@{/porfolDetail/{boardId}(boardId = ${bestFrontend.id})}">
-						  				<img th:src="|/upload/thumbnail/${frontendThumbnail}|" class="card-img-top thumbnail" alt="thumbnail..">
-						  			</a>
-						  		</div>
+						  		<a th:href="@{/porfolDetail/{boardId}(boardId = ${bestFrontend?.id})}" th:if="${bestFrontend != null}">
+						  			<img th:src="|/upload/thumbnail/${frontendThumbnail}|" class="card-img-top thumbnail" alt="thumbnail..">
+						  		</a>
+						  	</div>
 							<div class="card-body">
 								<ul class="list-group list-group-flush">
 						      		<li class="list-group-item">
 						      			<img src="/images/front.png"><span>프론트엔드</span>
 						      		</li>
 						  		</ul>
-						    	<h5 class="card-title" th:text="${bestFrontend.title}"></h5>
-						    	<p class="card-text" th:text="${bestFrontend.description}"></p>
+						    	<h5 class="card-title" th:text="${bestFrontend?.title}"></h5>
+						    	<p class="card-text" th:text="${bestFrontend?.description}"></p>
 						    	
-						    	<p id="hashtags" th:text="${bestFrontend.hashtags}"></p>
+						    	<p id="hashtags" th:text="${bestFrontend?.hashtags}"></p>
 							</div>
 						</div>
 						<!-- 백엔드 -->
 						<div class="card" style="width: 18rem;">
 							<div class="thumbnailDiv">
-						  			<a th:href="@{/porfolDetail/{boardId}(boardId = ${bestBackend.id})}">
+						  			<a th:href="@{/porfolDetail/{boardId}(boardId = ${bestBackend?.id})}" th:if="${bestBackend != null}">
 						  				<img th:src="|/upload/thumbnail/${backendThumbnail}|" class="card-img-top thumbnail" alt="thumbnail..">
 						  			</a>
 						  		</div>
@@ -73,16 +73,16 @@
 						      			<img src="/images/back.png"><span>백엔드</span>
 						      		</li>
 						  		</ul>
-						    	<h5 class="card-title" th:text="${bestBackend.title}"></h5>
-						    	<p class="card-text" th:text="${bestBackend.description}"></p>
+						    	<h5 class="card-title" th:text="${bestBackend?.title}"></h5>
+						    	<p class="card-text" th:text="${bestBackend?.description}"></p>
 						    	
-						    	<p id="hashtags" th:text="${bestBackend.hashtags}"></p>
+						    	<p id="hashtags" th:text="${bestBackend?.hashtags}"></p>
 							</div>
 						</div>
 						<!-- 디자인 -->
 						<div class="card" style="width: 18rem;">
 							<div class="thumbnailDiv">
-						  			<a th:href="@{/porfolDetail/{boardId}(boardId = ${bestDesign.id})}">
+						  			<a th:href="@{/porfolDetail/{boardId}(boardId = ${bestDesign?.id})}" th:if="${bestDesign != null}">
 						  				<img th:src="|/upload/thumbnail/${designThumbnail}|" class="card-img-top thumbnail" alt="thumbnail..">
 						  			</a>
 						  		</div>
@@ -92,10 +92,10 @@
 						      			<img src="/images/design.png"><span>디자인</span>
 						      		</li>
 						  		</ul>
-						    	<h5 class="card-title" th:text="${bestDesign.title}"></h5>
-						    	<p class="card-text" th:text="${bestDesign.description}"></p>
+						    	<h5 class="card-title" th:text="${bestDesign?.title}"></h5>
+						    	<p class="card-text" th:text="${bestDesign?.description}"></p>
 						    	
-						    	<p id="hashtags" th:text="${bestDesign.hashtags}"></p>
+						    	<p id="hashtags" th:text="${bestDesign?.hashtags}"></p>
 							</div>
 						</div>
 					</div>

@@ -34,7 +34,7 @@ public class HomeController {
 		PorfolUploadVO bestBackend = null;
 		PorfolUploadVO bestDesign = null;
 
-		if (!ObjectUtils.isEmpty(bestPorfolList)) {
+		if (bestPorfolList.size() == 3) {
 			for (PorfolUploadVO vo : bestPorfolList) {
 				if (vo.getCategory().equals("frontend")) {
 					bestFrontend = vo;
@@ -45,14 +45,48 @@ public class HomeController {
 				}
 			}
 		} else {
-			bestFrontend = new PorfolUploadVO();
-			bestBackend = new PorfolUploadVO();
-			bestDesign = new PorfolUploadVO();
+			for (PorfolUploadVO vo : bestPorfolList) {
+				if (vo.getCategory().equals("frontend")) {
+					bestFrontend = vo;
+				} else {
+					bestFrontend = null;
+				}
+				
+				if (vo.getCategory().equals("backend")) {
+					bestBackend = vo;
+				} else {
+					bestBackend = null;
+				}
+				
+				if (vo.getCategory().equals("design")) {
+					bestDesign = vo;
+				} else {
+					bestDesign = null;
+				}
+			}
 		}
 		
-		ThumbnailVO frontendThumbnail = thumbnailMapper.getById(bestFrontend.getThumbnailId());
-		ThumbnailVO backendThumbnail = thumbnailMapper.getById(bestBackend.getThumbnailId());
-		ThumbnailVO designThumbnail = thumbnailMapper.getById(bestDesign.getThumbnailId());
+		ThumbnailVO frontendThumbnail = null;
+		ThumbnailVO backendThumbnail = null;
+		ThumbnailVO designThumbnail = null;
+		
+		if (bestFrontend != null) {
+			frontendThumbnail = thumbnailMapper.getById(bestFrontend.getThumbnailId());
+		} else {
+			frontendThumbnail = null;
+		}
+		
+		if (bestBackend != null) {
+			backendThumbnail = thumbnailMapper.getById(bestBackend.getThumbnailId());
+		} else {
+			backendThumbnail = null;
+		}
+		
+		if (bestDesign != null) {
+			designThumbnail = thumbnailMapper.getById(bestDesign.getThumbnailId());
+		} else {
+			designThumbnail = null;
+		}
 		
 		// 신규 업로드 포폴
 		List<PorfolUploadVO> newUploadPorfolList = porfolBoardService.getNewUploadPorfol();
@@ -64,16 +98,22 @@ public class HomeController {
 			thumbnailMap.put(thumbnailId, thumbnailVO.getServerThumbnailName());
 		}
 		
-		if (!ObjectUtils.isEmpty(frontendThumbnail)) {
+		if (frontendThumbnail != null) {
 			model.addAttribute("frontendThumbnail", frontendThumbnail.getServerThumbnailName());
+		} else {
+			model.addAttribute("frontendThumbnail", null);
 		}
 		
-		if (!ObjectUtils.isEmpty(backendThumbnail)) {
+		if (backendThumbnail != null) {
 			model.addAttribute("backendThumbnail", backendThumbnail.getServerThumbnailName());
+		} else {
+			model.addAttribute("backendThumbnail", null);
 		}
 
-		if (!ObjectUtils.isEmpty(designThumbnail)) {
+		if (designThumbnail != null) {
 			model.addAttribute("designThumbnail", designThumbnail.getServerThumbnailName());
+		} else {
+			model.addAttribute("designThumbnail", null);
 		}
 		
 		model.addAttribute("bestFrontend", bestFrontend);
