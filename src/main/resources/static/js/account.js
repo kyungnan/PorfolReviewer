@@ -1,6 +1,20 @@
 var isPause = false;	/* 이메일 인증번호 유효시간 플래그 */
 var myVar;				/* 이메일 인증번호 유효시간 함수 */
 $(document).ready(function() {
+	/* 새로고침 시 이메일 인증번호 초기화 */
+	$.ajax({
+		url: '/account/certifiedExpiration',
+		type: 'get',
+		success: [function(){
+			isPause = true;
+			clearInterval(myVar);
+			$('#timer').text('');
+		}],
+		error: function(resp){
+			console.log(resp);
+		}
+	})
+	
 	/* 중복검사 */
 	 $(".duplicateBtn").on("click", function () {
 		var idx = $(this).index();		// idx=0 (username), idx=2 (email)
@@ -49,8 +63,14 @@ $(document).ready(function() {
 	/* 이메일 인증 */
 	$('#certifiedEmail').on('click', function(){
 		/* 인증번호 전송 버튼 여러번 클릭 시 기존 타이머 초기화 */
-		var time = -1;
+		var time = 0;
 		clearInterval(myVar);
+		
+		/* 이메일 입력 누락한 경우 */
+		if ($('#email').val() == null || $('#email').val() == '' || $('#email').val() == 'undefined'){
+			alert('이메일을 입력해주세요.');
+			return;
+		}
 		
 		var data = {
 			email : $('#email').val()

@@ -64,13 +64,21 @@ public class HomeController {
 			thumbnailMap.put(thumbnailId, thumbnailVO.getServerThumbnailName());
 		}
 		
-		model.addAttribute("bestFrontend", bestFrontend);
-		model.addAttribute("frontendThumbnail", frontendThumbnail.getServerThumbnailName());
-		model.addAttribute("bestBackend", bestBackend);
-		model.addAttribute("backendThumbnail", backendThumbnail.getServerThumbnailName());
-		model.addAttribute("bestDesign", bestDesign);
-		model.addAttribute("designThumbnail", designThumbnail.getServerThumbnailName());
+		if (!ObjectUtils.isEmpty(frontendThumbnail)) {
+			model.addAttribute("frontendThumbnail", frontendThumbnail.getServerThumbnailName());
+		}
 		
+		if (!ObjectUtils.isEmpty(backendThumbnail)) {
+			model.addAttribute("backendThumbnail", backendThumbnail.getServerThumbnailName());
+		}
+
+		if (!ObjectUtils.isEmpty(designThumbnail)) {
+			model.addAttribute("designThumbnail", designThumbnail.getServerThumbnailName());
+		}
+		
+		model.addAttribute("bestFrontend", bestFrontend);
+		model.addAttribute("bestBackend", bestBackend);
+		model.addAttribute("bestDesign", bestDesign);
 		model.addAttribute("newUploadPorfolList", newUploadPorfolList);
 		model.addAttribute("thumbnailMap", thumbnailMap);
 		return "home";
